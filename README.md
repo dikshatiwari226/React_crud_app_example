@@ -1,3 +1,12 @@
+I used node version for this project.
+node -v
+v10.16.3
+
+I used npm version for this project.
+npm --version
+6.9.0
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
