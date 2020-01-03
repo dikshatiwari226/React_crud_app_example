@@ -59,9 +59,9 @@ export default class Create extends Component{
 
 	render(){
 		return(
-			<div style={{ padding: "5%"}}>
-				<h3 align="center">Add New Business</h3>
-				<form onSubmit={this.onSubmit}>
+			<div style={{marginTop: "3%", padding: "5%"}}>
+				<h3 align="center">Add New Business</h3><br/>
+				<form onSubmit={this.onSubmit} >
 					<div className="form-group">
 						<label>Person Name:</label>
 						<input 

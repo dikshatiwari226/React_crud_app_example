@@ -38,9 +38,9 @@ export default class Index extends Component {
     const {business} = this.state
     console.log("--business", business)
     return (
-      <div style={{ padding: "5%"}}>
-        <h3 align="center">Business List</h3>
-        <table className="table table-striped" style={{ marginTop: 20}}>
+      <div style={{marginTop: "3%",padding: "5%"}}>
+        <h3 align="center">Business List</h3><br/>
+        <table className="table table-striped" style={{ marginTop: 20}} >
           <thead>
             <tr>
               <th>Person</th>
@@ -56,7 +56,7 @@ export default class Index extends Component {
                   <td>{busi.business_name}</td>
                   <td>{busi.business_gst_number}</td>
                   <td><Link to={"/show/"+busi.id} className="btn btn-primary">Show</Link></td>
-                  <td><Link to={"/edit/"+busi.id} className="btn btn-primary">Edit</Link></td>
+                  <td><Link to={"/edit/"+busi.id} className="btn btn-warning">Edit</Link></td>
                   <td><button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.businessDelete(busi.id)};}}>Delete</button></td>
 
                 </tr>

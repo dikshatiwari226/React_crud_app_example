@@ -72,8 +72,8 @@ export default class Edit extends Component {
 
     render() {
       return (
-        <div style={{ marginTop: 10}}>
-				<h3 className="center">Add New Business</h3>
+        <div style={{ marginTop: "3%",  padding: "5%"}}>
+				<h3 className="text-center">Add New Business</h3><br/>
 				<form onSubmit={this.onSubmit}>
 					<div className="form-group">
 						<label>Person Name:</label>

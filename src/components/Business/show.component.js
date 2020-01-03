@@ -26,8 +26,8 @@ export default class Show extends Component {
 
   render() {
       return (
-        <div style={{ marginTop: 10}}>
-          <h3 align="center">Show Details</h3>
+        <div style={{marginTop: "3%", padding: "5%"}}>
+          <h3 align="center">Show Details</h3><br/>
           <table className="table table-striped" style={{ marginTop: 20}}>
           <thead>
             <tr>

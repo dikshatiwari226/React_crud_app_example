@@ -6,19 +6,28 @@ import Create from './components/Business/create.component';
 import Edit from './components/Business/edit.component';
 import Index from './components/Business/index.component';
 import Show from './components/Business/show.component';
-import Signup from './components/signup.component';
-import Login from './components/login.component';
+import Signup from './components/auth/Signup';
+import Login from './components/auth/Login';
+import Admin from './components/auth/Admin';
+import Profile from './components/User/Profile';
+import EditProfile from './components/User/EditProfile';
 import './index.css';
-
 
 // import './App.css';
 
 class App extends Component{
+
+  Logout() {
+    localStorage.clear();
+    window.location = "/login"
+    alert("Logout successfully");
+  }
+
   render(){
     return(
       <Router>
         <div>
-          <nav className="mb-4 navbar navbar-expand-lg navbar-dark bg-unique">
+          <nav className="mb-4 navbar navbar-expand-lg navbar-dark bg-unique fixed-top">
             <a className="navbar-brand" href="#">React CRUD Example</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-3" aria-controls="navbarSupportedContent-3" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
@@ -49,9 +58,21 @@ class App extends Component{
                     <li className="nav-item  d-flex justify-content-end">
                       <Link to={'/signup'} className="nav-link">Sign Up</Link>
                     </li>
-                    <li className="nav-item  d-flex justify-content-end">
-                      <Link to={'/login'} className="nav-link">Login</Link>
-                    </li>
+                    {
+                      !localStorage.token &&
+                    
+                      <li className="nav-item  d-flex justify-content-end">
+                        <Link to={'/login'} className="nav-link"><i class="fa fa-sign-in"> Login</i></Link>
+                      </li>
+                    }
+                    {
+                      localStorage.token &&
+                    
+                      <li className="nav-item  d-flex justify-content-end">
+                        <Link onClick={this.Logout} className="nav-link"><i class="fa fa-sign-out"></i>Logout</Link> 
+                      </li>
+                    }
+
                     <form className="form-inline">
                         <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
                     </form>
@@ -59,7 +80,8 @@ class App extends Component{
                         <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fa fa-user"></i> 
                             </a>
                         <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink">
-                            <a className="dropdown-item" href="#"><i className="fa fa-user"> Profile</i> </a>
+                            
+                            <a className="dropdown-item" href="/profile"><i className="fa fa-user">Profile</i></a>
                             <a className="dropdown-item" href="#"><i className="fa fa-sign-out" aria-hidden="true">Log out</i></a>
                             <a className="dropdown-item" href="#"><i className="fa fa-cog"> Change Password</i></a>
                         </div>
@@ -69,14 +91,15 @@ class App extends Component{
           </nav>
           
           <br/>
-           <h2 className="text-center">Welcome to React CRUD Tutorial</h2> <br/>
            <Switch>
-             <Route exact path='/create' component={Create}/>
-             <Route path='/edit/:id' component={Edit}/>
-             <Route path='/index' component={Index}/>
-             <Route path='/show/:id' component={Show}/>
-             <Route path='/signup' component={Signup}/>
-             <Route path='/login' component={Login}/>
+              <Route exact path='/create' component={Create}/>
+              <Route path='/edit/:id' component={Edit}/>
+              <Route path='/index' component={Index}/>
+              <Route path='/show/:id' component={Show}/>
+              <Route path='/signup' component={Signup}/>
+              <Route path='/login' component={Login}/>
+              <Route path='/profile' component={Profile}/>
+              <Route path='/edit_profile/:id' component={EditProfile}/>
            </Switch>
         </div>
       </Router>
