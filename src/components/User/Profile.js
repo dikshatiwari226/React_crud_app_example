@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF, faGoogle,faTwitter,faLinkedin,faGithub } from '@fortawesome/free-brands-svg-icons'
+import Moment from 'react-moment';
 
 
 export default class Profile extends Component{
@@ -45,7 +48,7 @@ export default class Profile extends Component{
                               Change Photo
                               <input type="file" name="file"/>
                           </div>
-                      </div>
+                      </div><br/>
                   </div>
                   <div className="col-md-6">
                       <div className="profile-head">
@@ -74,10 +77,11 @@ export default class Profile extends Component{
               <div className="row">
                   <div className="col-md-4">
                       <div className="profile-work">
-                          <p>WORK LINK</p>
-                          <a href="">Website Link</a><br/>
-                          <a href="">Bootsnipp Profile</a><br/>
-                          <a href="">Bootply Profile</a>
+                       <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></a>
+                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></a>
+                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></a>
+                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faLinkedin}/></a>
+                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGithub}/></a>
                           <p>SKILLS</p>
                           <a href="">Web Designer</a><br/>
                           <a href="">Web Developer</a><br/>
@@ -102,7 +106,7 @@ export default class Profile extends Component{
                                               <label>Name</label>
                                           </div>
                                           <div className="col-md-6">
-                                              <p>{this.state.name}i</p>
+                                              <p>{this.state.name}</p>
                                           </div>
                                       </div>
                                       <div className="row">
@@ -152,16 +156,10 @@ export default class Profile extends Component{
                                               <label>Date of Birth</label>
                                           </div>
                                           <div className="col-md-6">
-                                              <p>{this.state.dob}</p>
+                                              <p><Moment format="DD MMM YYYY">{this.state.dob}
+                                              </Moment></p>
                                           </div>
                                       </div>
-
-                              <div className="row">
-                                  <div className="col-md-12">
-                                      <label>Your Bio</label><br/>
-                                      <p>Your detail description</p>
-                                  </div>
-                              </div>
                           </div>
                       </div>
                   </div>

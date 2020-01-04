@@ -197,3 +197,12 @@ code {
     font-weight: 600;
     color: #0062cc;
 }
+
+/*====*/
+.borderedioooi { 
+	border: none !important;
+	border-bottom: 1px solid #bdbdbd!important;
+	width: 802.55px !important;
+	height: 52.2px !important;
+	margin-bottom: 0rem !important;
+}

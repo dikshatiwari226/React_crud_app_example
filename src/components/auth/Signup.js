@@ -51,7 +51,7 @@ export default class Signup extends Component{
     			<p className="h4 mb-4">Sign up</p>
 
       			<div className="input-group mb-2">
-			        <input type="text" id="defaultRegisterFormName" className="form-control" placeholder="Username" 
+			        <input type="text"  className="form-control" placeholder="Username" 
 		        	name="name" 
 	       		 	value={this.state.name}
 			        onChange={this.onChangeHandler} 
@@ -59,7 +59,7 @@ export default class Signup extends Component{
       			</div>
 
       			<div className="input-group mb-2">
-			        <input type="email" id="defaultRegisterFormEmail" className="form-control" placeholder="E-mail" 
+			        <input type="email"  className="form-control" placeholder="E-mail" 
 			        name="email"
 			        value={this.state.email}
 			        onChange={this.onChangeHandler} 
@@ -67,7 +67,7 @@ export default class Signup extends Component{
       			</div>
 
       			<div className="input-group mb-2">
-			        <input type="password" id="defaultRegisterFormPassword" className="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
+			        <input type="password"  className="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
 		         	name="password"
 		         	value={this.state.password}
 			        onChange={this.onChangeHandler} 

@@ -11,6 +11,7 @@ import Login from './components/auth/Login';
 import Admin from './components/auth/Admin';
 import Profile from './components/User/Profile';
 import EditProfile from './components/User/EditProfile';
+import UserIndex from './components/User/UserIndex';
 import './index.css';
 
 // import './App.css';
@@ -43,6 +44,9 @@ class App extends Component{
                   </li>
                   <li className="nav-item">
                     <Link to={'/index'} className="nav-link">Index</Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link to={'/userIndex'} className="nav-link">Users</Link>
                   </li>
                   <li className="nav-item dropdown active">
                     <a className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorials 
@@ -100,6 +104,8 @@ class App extends Component{
               <Route path='/login' component={Login}/>
               <Route path='/profile' component={Profile}/>
               <Route path='/edit_profile/:id' component={EditProfile}/>
+              <Route path="/userIndex" component={UserIndex}/>
+              <Route path='/' component={Index}/>
            </Switch>
         </div>
       </Router>

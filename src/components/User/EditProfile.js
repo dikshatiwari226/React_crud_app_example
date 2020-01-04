@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import 'react-day-picker/lib/style.css';
 
 export default class EditProfile extends Component{
 
@@ -9,16 +10,26 @@ export default class EditProfile extends Component{
 		super(props);
 		this.onChangeHandler = this.onChangeHandler.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+		this.handleDayChange = this.handleDayChange.bind(this);
+
 		this.state ={
 				name: '',
         email: '',
         password: '',
         gender: '',
         contact: '',
+        selectedDay: undefined,
+
         dob: '',
         address: '',
         profession: ''
 		}
+	}
+
+	handleDayChange(selectedDay){
+		this.setState({
+			selectedDay
+		});
 	}
 
 	componentDidMount(){
@@ -47,25 +58,30 @@ export default class EditProfile extends Component{
       'User-Token': localStorage.token
     }	
 
+    var dateAbc = `${this.state.selectedDay.getFullYear()}-${this.state.selectedDay.getMonth() + 1}-${this.state.selectedDay.getDate()}`;
+		console.log(dateAbc);
+
     var obj = {
 			name: this.state.name,
 			email: this.state.email,
 			password: this.state.password,
 			gender: this.state.gender,
 			contact: this.state.contact,
-			dob: this.state.dob,
+			dob: dateAbc,
 			address: this.state.address,
 			profession: this.state.profession
 		}
-
 		axios.post(`http://localhost:3000/api/v1/edit_profile`, obj, {headers: header})
-    .then(res=>
-    	window.location = "/index",
-    	alert("User updated successfully")
-    );
+    .then(res=>{
+    	window.location = "/profile";
+    	alert("User updated successfully");
+    });
+    
+
 	}
 
 	render(){
+		const {selectedDay} = this.state;
 		return(
 			<div className="container-fluid"><br/><br/><br/>
 			<div className="row d-flex justify-content-center">
@@ -73,7 +89,7 @@ export default class EditProfile extends Component{
     			<p className="h4 mb-4">Edit Profile</p>
 
       			<div className="input-group mb-2">
-			        <input type="text" id="defaultRegisterFormName" className="form-control" placeholder="Username" 
+			        <input type="text" className="form-control" placeholder="Username" 
 		        	name="name" 
 	       		 	value={this.state.name}
 			        onChange={this.onChangeHandler} 
@@ -81,7 +97,7 @@ export default class EditProfile extends Component{
       			</div>
 
       			<div className="input-group mb-2">
-			        <input type="email" id="defaultRegisterFormEmail" className="form-control" placeholder="E-mail" 
+			        <input type="email" className="form-control" placeholder="E-mail" 
 			        name="email"
 			        value={this.state.email}
 			        onChange={this.onChangeHandler} 
@@ -89,22 +105,24 @@ export default class EditProfile extends Component{
       			</div>
 
       			<div className="input-group mb-2">
-			        <input type="password" id="defaultRegisterFormPassword" className="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
+			        <input type="password" className="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
 		         	name="password"
 		         	value={this.state.password}
 			        onChange={this.onChangeHandler} 
 			       />
       			</div>
       			<div className="input-group mb-2">
-			        <input type="text" id="defaultRegisterFormName" className="form-control" placeholder="Gender" 
-		        	name="gender" 
-	       		 	value={this.state.gender}
-			        onChange={this.onChangeHandler} 
-			        />
+			        <select className="form-control borderedioooi"  
+			        	name="gender"
+			        	value={this.state.gender}
+                onChange={this.onChangeHandler}>
+                	<option>Male</option>
+                	<option>Female</option>
+              </select>
       			</div>
 
       			<div className="input-group mb-2">
-			        <input type="text" id="defaultRegisterFormEmail" className="form-control" placeholder="Contact" 
+			        <input type="text"  className="form-control" placeholder="Contact" 
 			        name="contact"
 			        value={this.state.contact}
 			        onChange={this.onChangeHandler} 
@@ -112,15 +130,15 @@ export default class EditProfile extends Component{
       			</div>
 
       			<div className="input-group mb-2">
-			        <input type="text" id="defaultRegisterFormPassword" className="form-control" placeholder="DOB" aria-describedby="defaultRegisterFormPasswordHelpBlock"
-		         	name="dob"
-		         	value={this.state.dob}
-			        onChange={this.onChangeHandler} 
-			       />
+			       	<DayPickerInput inputProps={{ className: 'form-control borderedioooi ' }} placeholder="DOB"
+			       		name="dob"
+         				value={this.state.dob}
+                onDayChange={this.handleDayChange}  
+              />
       			</div>
 
       			<div className="input-group mb-2">
-			        <input type="text" id="defaultRegisterFormEmail" className="form-control" placeholder="address" 
+			        <input type="text"  className="form-control" placeholder="address" 
 			        name="address"
 			        value={this.state.address}
 			        onChange={this.onChangeHandler} 
@@ -128,7 +146,7 @@ export default class EditProfile extends Component{
       			</div>
 
       			<div className="input-group mb-2">
-			        <input type="text" id="defaultRegisterFormPassword" className="form-control" placeholder="Profession" aria-describedby="defaultRegisterFormPasswordHelpBlock"
+			        <input type="text"  className="form-control" placeholder="Profession" aria-describedby="defaultRegisterFormPasswordHelpBlock"
 		         	name="profession"
 		         	value={this.state.profession}
 			        onChange={this.onChangeHandler} 
