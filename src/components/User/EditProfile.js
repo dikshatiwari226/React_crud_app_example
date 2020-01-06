@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -81,7 +80,7 @@ export default class EditProfile extends Component{
 	}
 
 	render(){
-		const {selectedDay} = this.state;
+		{/*const {selectedDay} = this.state; */}
 		return(
 			<div className="container-fluid"><br/><br/><br/>
 				<div className="row d-flex justify-content-center">

@@ -8,7 +8,6 @@ import Index from './components/Business/index.component';
 import Show from './components/Business/show.component';
 import Signup from './components/auth/Signup';
 import Login from './components/auth/Login';
-import Admin from './components/auth/Admin';
 import Profile from './components/User/Profile';
 import EditProfile from './components/User/EditProfile';
 import UserIndex from './components/User/UserIndex';
