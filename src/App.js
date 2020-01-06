@@ -12,8 +12,11 @@ import Admin from './components/auth/Admin';
 import Profile from './components/User/Profile';
 import EditProfile from './components/User/EditProfile';
 import UserIndex from './components/User/UserIndex';
-import './index.css';
+import ShowUser from './components/User/ShowUser';
+import EditUser from './components/User/EditUser';
 
+import './index.css';
+import { FaSignOutAlt,FaSignInAlt } from 'react-icons/fa';
 // import './App.css';
 
 class App extends Component{
@@ -59,23 +62,7 @@ class App extends Component{
                     </li>
                 </ul>
                 <ul className="navbar-nav ml-auto nav-flex-icons">
-                    <li className="nav-item  d-flex justify-content-end">
-                      <Link to={'/signup'} className="nav-link">Sign Up</Link>
-                    </li>
-                    {
-                      !localStorage.token &&
                     
-                      <li className="nav-item  d-flex justify-content-end">
-                        <Link to={'/login'} className="nav-link"><i class="fa fa-sign-in"> Login</i></Link>
-                      </li>
-                    }
-                    {
-                      localStorage.token &&
-                    
-                      <li className="nav-item  d-flex justify-content-end">
-                        <Link onClick={this.Logout} className="nav-link"><i class="fa fa-sign-out"></i>Logout</Link> 
-                      </li>
-                    }
 
                     <form className="form-inline">
                         <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
@@ -85,11 +72,30 @@ class App extends Component{
                             </a>
                         <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink">
                             
-                            <a className="dropdown-item" href="/profile"><i className="fa fa-user">Profile</i></a>
-                            <a className="dropdown-item" href="#"><i className="fa fa-sign-out" aria-hidden="true">Log out</i></a>
+                            <a className="dropdown-item" href="/profile"><i className="fa fa-user"> Profile</i></a>
+                            <a className="dropdown-item" href="#" style={{fontWeight: "bold"}}><FaSignOutAlt/> Log out</a>
                             <a className="dropdown-item" href="#"><i className="fa fa-cog"> Change Password</i></a>
                         </div>
                     </li>
+
+                    <li className="nav-item  d-flex justify-content-end">
+                      <Link to={'/signup'} className="nav-link">Sign Up</Link>
+                    </li>
+                        {
+                          !localStorage.token &&
+                        
+                          <li className="nav-item  d-flex justify-content-end">
+                            <Link to={'/login'} className="nav-link"><FaSignInAlt/> Login</Link>
+                          </li>
+                        }
+                        {
+                          localStorage.token &&
+                        
+                          <li className="nav-item  d-flex justify-content-end">
+                            <Link onClick={this.Logout} className="nav-link"><FaSignOutAlt/>
+                            Logout</Link> 
+                          </li>
+                        }
                 </ul>
             </div>
           </nav>
@@ -105,7 +111,10 @@ class App extends Component{
               <Route path='/profile' component={Profile}/>
               <Route path='/edit_profile/:id' component={EditProfile}/>
               <Route path="/userIndex" component={UserIndex}/>
+              <Route path='/editUser/:id' component={EditUser}/>
+              <Route path='/showUser/:id' component={ShowUser}/>
               <Route path='/' component={Index}/>
+              
            </Switch>
         </div>
       </Router>

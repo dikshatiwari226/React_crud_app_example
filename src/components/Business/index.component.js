@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; 
-
+import Pagination from "react-js-pagination";
+require("bootstrap/scss/bootstrap.scss");
 
 export default class Index extends Component {
 
 	constructor(props){
 		super(props);
-      this.state = {business: []};
+      this.state = {business: [], activePage: 2};
 	}
 
   componentDidMount(){
@@ -31,6 +32,11 @@ export default class Index extends Component {
       .then(response => {
         window.location = "/index"
       })
+  }
+
+   handlePageChange(pageNumber) {
+    console.log(`active page is ${pageNumber}`);
+    this.setState({activePage: pageNumber});
   }
 
   
@@ -63,6 +69,14 @@ export default class Index extends Component {
               ))} 
           </tbody>
         </table>
+
+        <Pagination
+          activePage={this.state.activePage}
+          itemsCountPerPage={10}
+          totalItemsCount={450}
+          pageRangeDisplayed={5}
+          onChange={this.handlePageChange}
+        />
       </div>
     )
   }

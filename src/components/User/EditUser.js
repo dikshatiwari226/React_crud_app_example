@@ -1,45 +1,40 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
 import axios from 'axios';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 
-export default class EditProfile extends Component{
+export default class EditUser extends Component {
 
 	constructor(props){
 		super(props);
-		this.onChangeHandler = this.onChangeHandler.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-		this.handleDayChange = this.handleDayChange.bind(this);
+			this.onChangeHandler = this.onChangeHandler.bind(this);
+			this.handleDayChange = this.handleDayChange.bind(this);
+			this.onSubmit = this.onSubmit.bind(this);
 
-		this.state ={
+			this.state ={
 				name: '',
         email: '',
-        password: '',
         gender: '',
         contact: '',
-        selectedDay: undefined,
-
+       	selectedDay: undefined,
         dob: '',
         address: '',
         profession: ''
-		}
+			}
 	}
 
-	handleDayChange(selectedDay){
+	handleDayChange(selectedDay, dayPickerInput){
 		this.setState({
 			selectedDay
 		});
 	}
 
 	componentDidMount(){
-    const header = {
-      'Content-Type': 'application/json',
-      'User-Token': localStorage.token
-    }
-    axios.get(`http://localhost:3000/api/v1/profile`, {headers: header})
+		var id = this.props.match.params["id"]
+
+    axios.get(`http://localhost:3000/api/v1/showUser/${id}`)
     .then(res=>{
-      this.setState({id: res.data.id, name: res.data.name, email: res.data.email, gender: res.data.gender, contact: res.data.contact, dob: res.data.dob, address: res.data.address, profession: res.data.profession});
+      this.setState({id: res.data.id, name: res.data.name, email: res.data.email, gender: res.data.gender, dob: res.data.dob, address: res.data.address, profession: res.data.profession});
     })
     .catch(function(error){
       console.log(error);
@@ -51,42 +46,40 @@ export default class EditProfile extends Component{
     this.setState({ [name]: value });
 	}
 
-	onSubmit(event){
-		event.preventDefault();
+	onSubmit(e){
 		const header = {
-      'Content-Type': 'application/json',
-      'User-Token': localStorage.token
-    }	
+      'Content-Type': 'application/json'
+    }
+		e.preventDefault();
 
-    var dateAbc = `${this.state.selectedDay.getFullYear()}-${this.state.selectedDay.getMonth() + 1}-${this.state.selectedDay.getDate()}`;
+		var dateAbc = `${this.state.selectedDay.getFullYear()}-${this.state.selectedDay.getMonth() + 1}-${this.state.selectedDay.getDate()}`;
 		console.log(dateAbc);
 
-    var obj = {
+		var obj = {
 			name: this.state.name,
 			email: this.state.email,
-			password: this.state.password,
 			gender: this.state.gender,
 			contact: this.state.contact,
 			dob: dateAbc,
 			address: this.state.address,
 			profession: this.state.profession
 		}
-		axios.post(`http://localhost:3000/api/v1/edit_profile`, obj, {headers: header})
-    .then(res=>{
-    	window.location = "/profile";
-    	alert("User updated successfully");
-    });
-    
 
-	}
+		var id = this.props.match.params["id"]
+    axios.post(`http://localhost:3000/api/v1/editUser/${id}`, obj, {headers: header})
+    .then(res=>
+    	window.location = `/showUser/${res.data.data.user.id}`,
+    	alert("User updated successfully")
+    );
+      
+    }
 
-	render(){
-		const {selectedDay} = this.state;
-		return(
-			<div className="container-fluid"><br/><br/><br/>
+    render() {
+      return (
+        <div className="container-fluid"><br/><br/><br/>
 				<div className="row d-flex justify-content-center">
 					<form className="text-center border border-light p-3 shadow p-3 mb-5 bg-white rounded" action="#!" style={{marginTop: 25, width: "65%"}} onSubmit={this.onSubmit}>
-		    			<p className="h4 mb-4">Edit Profile</p>
+		    			<p className="h4 mb-4">Edit User</p>
 
 		      			<div className="input-group mb-2">
 					        <input type="text" className="form-control" placeholder="Username" 
@@ -130,7 +123,7 @@ export default class EditProfile extends Component{
 		      			</div>
 
 		      			<div className="input-group mb-2">
-					       	<DayPickerInput inputProps={{ className: 'form-control borderedioooi ' }} placeholder="DOB"
+					       		<DayPickerInput inputProps={{ className: 'form-control borderedioooi ' }} 
 					       		name="dob"
 		         				value={this.state.dob}
 		                onDayChange={this.handleDayChange}  
@@ -152,11 +145,10 @@ export default class EditProfile extends Component{
 					        onChange={this.onChangeHandler} 
 					       />
 		      			</div>
-		    			<button className="btn btn-info my-4" type="submit">Update Profile</button>
+		    			<button className="btn btn-info my-4" type="submit">Update User</button>
 					</form>
 				</div>
   	</div>
-		);
-	}
-
+      )
+    }
 }

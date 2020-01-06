@@ -15,6 +15,33 @@ code {
     monospace;
 }
 
+/*========= Datatable ============*/
+.dataTables_paginate{
+    float:right;
+}
+.dataTables_filter{
+    float: right;
+}
+
+  .nav-xbootstrap li:hover ul.dropdown{
+    z-index: 9999;
+  }
+  table.dataTable thead {
+    cursor: pointer;
+  }
+  .sorting {
+    cursor: pointer;
+  }
+  .sorting:after {
+    content: url(data:image/gif;base64,R0lGODlhCwALAJEAAAAAAP///xUVFf///yH5BAEAAAMALAAAAAALAAsAAAIUnC2nKLnT4or00PvyrQwrPzUZshQAOw==);
+    padding-left: 1em;
+  }
+  .sorting_asc:after {
+    content: '\25B2';
+  }
+  .sorting_desc:after {
+    content: '\25BC';
+  } 
 /*------ Login Style -------*/
 #login {
 	-webkit-perspective: 1000px;
