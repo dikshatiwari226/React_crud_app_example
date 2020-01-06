@@ -61,10 +61,10 @@ export default class Profile extends Component{
                                   
                           <ul className="nav nav-tabs" id="myTab" role="tablist">
                               <li className="nav-item">
-                                  <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                  <a className="nav-link active" id="home-tab" data-toggle="tab"  role="tab" aria-controls="home" aria-selected="true">About</a>
                               </li>
                               <li className="nav-item">
-                                  <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                  <a className="nav-link" id="profile-tab" data-toggle="tab"  role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
                               </li>
                           </ul>
                       </div>
@@ -77,17 +77,17 @@ export default class Profile extends Component{
               <div className="row">
                   <div className="col-md-4">
                       <div className="profile-work">
-                       <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></a>
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></a>
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></a>
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faLinkedin}/></a>
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGithub}/></a>
+                        <a className="mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></a>
+                        <a className="mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></a>
+                        <a className="mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></a>
+                        <a className="mx-2" role="button"><FontAwesomeIcon icon={faLinkedin}/></a>
+                        <a className="mx-2" role="button"><FontAwesomeIcon icon={faGithub}/></a>
                           <p>SKILLS</p>
-                          <a href="">Web Designer</a><br/>
-                          <a href="">Web Developer</a><br/>
-                          <a href="">WordPress</a><br/>
-                          <a href="">WooCommerce</a><br/>
-                          <a href="">PHP, .Net</a><br/>
+                          <a >Web Designer</a><br/>
+                          <a >Web Developer</a><br/>
+                          <a >WordPress</a><br/>
+                          <a >WooCommerce</a><br/>
+                          <a >PHP, .Net</a><br/>
                       </div>
                   </div>
                   <div className="col-md-8">
