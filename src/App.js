@@ -14,6 +14,7 @@ import UserIndex from './components/User/UserIndex';
 import ShowUser from './components/User/ShowUser';
 import EditUser from './components/User/EditUser';
 
+
 import './index.css';
 import { FaSignOutAlt,FaSignInAlt } from 'react-icons/fa';
 // import './App.css';
@@ -90,8 +91,8 @@ class App extends Component{
                           localStorage.token &&
                         
                           <li className="nav-item  d-flex justify-content-end">
-                            <Link onClick={this.Logout} className="nav-link"><FaSignOutAlt/>
-                            Logout</Link> 
+                            <button onClick={this.Logout} className="nav-link"><FaSignOutAlt/>
+                            Logout</button> 
                           </li>
                         }
                 </ul>

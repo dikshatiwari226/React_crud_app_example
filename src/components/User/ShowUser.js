@@ -22,7 +22,7 @@ export default class ShowUser extends Component {
 
     axios.get(`http://localhost:3000/api/v1/showUser/${id}`)
     .then(res=>{
-      this.setState({id: res.data.id, name: res.data.name, email: res.data.email, gender: res.data.gender, contact: res.data.contact, dob: res.data.dob, address: res.data.address, profession: res.data.profession});
+      this.setState({id: res.data.id, name: res.data.name, email: res.data.email, gender: res.data.gender, contact: res.data.contact, dob: res.data.dob, address: res.data.address, profession: res.data.profession, image: res.data.iamge});
     })
     .catch(function(error){
       console.log(error);
@@ -43,6 +43,7 @@ export default class ShowUser extends Component {
               <th>DOB</th>
               <th>Address</th>
               <th>Profession</th>
+              <th>Image</th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +55,7 @@ export default class ShowUser extends Component {
                   <td><Moment format="DD MMM YYYY">{this.state.dob}</Moment></td>
                   <td>{this.state.address}</td>
                   <td>{this.state.profession}</td>
+                  <td>{this.state.image}</td>
                 </tr>
           </tbody>
         </table>

@@ -10,6 +10,7 @@ export default class EditUser extends Component {
 			this.onChangeHandler = this.onChangeHandler.bind(this);
 			this.handleDayChange = this.handleDayChange.bind(this);
 			this.onSubmit = this.onSubmit.bind(this);
+			this.fileSelectedHandler = this.fileSelectedHandler.bind(this);
 
 			this.state ={
 				name: '',
@@ -19,8 +20,17 @@ export default class EditUser extends Component {
        	selectedDay: undefined,
         dob: '',
         address: '',
-        profession: ''
+        profession: '',
+        selectedFile: null,
+        image: ''
 			}
+	}
+
+	fileSelectedHandler = event =>{
+		this.setState({
+			selectedFile: event.target.files[0]
+		})
+		console.log(event.target.files[0]);
 	}
 
 	handleDayChange(selectedDay, dayPickerInput){
@@ -47,13 +57,16 @@ export default class EditUser extends Component {
 	}
 
 	onSubmit(e){
+		e.preventDefault();
 		const header = {
       'Content-Type': 'application/json'
     }
-		e.preventDefault();
 
 		var dateAbc = `${this.state.selectedDay.getFullYear()}-${this.state.selectedDay.getMonth() + 1}-${this.state.selectedDay.getDate()}`;
 		console.log(dateAbc);
+
+		const fdata = new FormData();
+		fdata.append('file', this.state.selectedFile, this.state.selectedFile.name); 
 
 		var obj = {
 			name: this.state.name,
@@ -62,11 +75,14 @@ export default class EditUser extends Component {
 			contact: this.state.contact,
 			dob: dateAbc,
 			address: this.state.address,
-			profession: this.state.profession
-		}
+			profession: this.state.profession,
+		 	image: fdata
+		} 
+			
 
+		debugger
 		var id = this.props.match.params["id"]
-    axios.post(`http://localhost:3000/api/v1/editUser/${id}`, obj, {headers: header})
+    axios.post(`http://localhost:3000/api/v1/editUser/${id}`, obj,  {headers: header})
     .then(res=>
     	window.location = `/showUser/${res.data.data.user.id}`,
     	alert("User updated successfully")
@@ -145,6 +161,8 @@ export default class EditUser extends Component {
 					        onChange={this.onChangeHandler} 
 					       />
 		      			</div>
+
+		      			<input type="file" onChange={this.fileSelectedHandler} />
 		    			<button className="btn btn-info my-4" type="submit">Update User</button>
 					</form>
 				</div>
