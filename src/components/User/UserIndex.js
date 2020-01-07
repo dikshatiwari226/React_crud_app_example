@@ -42,7 +42,7 @@ export default class UserIndex extends Component {
     const {users} = this.state
     console.log("--Users", users)
 
-    const allrecords = []
+    const allrecords = [] 
     {
       users.map( (user, index) => 
         <div key={index}>
@@ -51,8 +51,7 @@ export default class UserIndex extends Component {
               })
           }
         </div>
-      )
-    }
+      )};
 
       this.state = {allrecords};
 
