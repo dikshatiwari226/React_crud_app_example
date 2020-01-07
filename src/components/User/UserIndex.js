@@ -52,56 +52,57 @@ export default class UserIndex extends Component {
           }
         </div>
       )
+    }
 
-    this.state = {allrecords};
+      this.state = {allrecords};
 
-    const data = {
-      columns: [
-        {
-          label: 'SNo.',
-          field: 'sn',
-          sort: 'disabled',
-          width: 100
-        },
-        {
-          label: 'Id',
-          field: 'id',
-          sort: 'asc',
-          width: 100
-        },
-        {
-          label: 'Name',
-          field: 'name',
-          sort: 'asc',
-          width: 100
-        },
-        {
-          label: 'Email',
-          field: 'email',
-          sort: 'asc',
-          width: 100
-        },
-        {
-          label: 'Show',
-          field: 'show',
-          sort: 'disabled',
-          width: 100
-        },
-        {
-          label: 'Edit',
-          field: 'edit',
-          sort: 'disabled',
-          width: 100
-        },
-        {
-          label: 'Delete',
-          field: 'delete',
-          sort: 'disabled',
-          width: 100
-        }
-      ],
-      rows: allrecords
-    };
+      const data = {
+        columns: [
+          {
+            label: 'SNo.',
+            field: 'sn',
+            sort: 'disabled',
+            width: 100
+          },
+          {
+            label: 'Id',
+            field: 'id',
+            sort: 'asc',
+            width: 100
+          },
+          {
+            label: 'Name',
+            field: 'name',
+            sort: 'asc',
+            width: 100
+          },
+          {
+            label: 'Email',
+            field: 'email',
+            sort: 'asc',
+            width: 100
+          },
+          {
+            label: 'Show',
+            field: 'show',
+            sort: 'disabled',
+            width: 100
+          },
+          {
+            label: 'Edit',
+            field: 'edit',
+            sort: 'disabled',
+            width: 100
+          },
+          {
+            label: 'Delete',
+            field: 'delete',
+            sort: 'disabled',
+            width: 100
+          }
+        ],
+        rows: allrecords
+      };
     
     return (
       <div style={{marginTop: "3%",padding: "5%"}}>
