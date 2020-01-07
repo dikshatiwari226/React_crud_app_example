@@ -80,7 +80,6 @@ export default class EditUser extends Component {
 		} 
 			
 
-		debugger
 		var id = this.props.match.params["id"]
     axios.post(`http://localhost:3000/api/v1/editUser/${id}`, obj,  {headers: header})
     .then(res=>

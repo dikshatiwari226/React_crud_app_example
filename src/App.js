@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
-
 import Create from './components/Business/create.component';
 import Edit from './components/Business/edit.component';
 import Index from './components/Business/index.component';
@@ -13,11 +12,8 @@ import EditProfile from './components/User/EditProfile';
 import UserIndex from './components/User/UserIndex';
 import ShowUser from './components/User/ShowUser';
 import EditUser from './components/User/EditUser';
-
-
 import './index.css';
 import { FaSignOutAlt,FaSignInAlt } from 'react-icons/fa';
-// import './App.css';
 
 class App extends Component{
 

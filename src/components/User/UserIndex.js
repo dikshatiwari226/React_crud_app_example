@@ -42,16 +42,17 @@ export default class UserIndex extends Component {
     const {users} = this.state
     console.log("--Users", users)
 
-    const allrecords = [] 
+    const allrecords = []; 
     {
-      users.map( (user, index) => 
+      users.map((user, index) => 
         <div key={index}>
           {
               allrecords.push({sn: index + 1, id: user.id, name: user.name, email: user.email, show: <Link to={"/showUser/"+user.id} className="btn btn-primary">Show</Link>, edit: <Link to={"/editUser/"+user.id} className="btn btn-warning">Edit</Link>, delete: <button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.userDelete(user.id)};}}>Delete</button> })
               })
           }
         </div>
-      )};
+      )
+    }
 
       this.state = {allrecords};
 
