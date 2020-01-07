@@ -80,7 +80,6 @@ export default class EditProfile extends Component{
 	}
 
 	render(){
-		{/*const {selectedDay} = this.state; */}
 		return(
 			<div className="container-fluid"><br/><br/><br/>
 				<div className="row d-flex justify-content-center">

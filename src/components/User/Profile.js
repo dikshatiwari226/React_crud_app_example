@@ -61,10 +61,11 @@ export default class Profile extends Component{
                                   
                           <ul className="nav nav-tabs" id="myTab" role="tablist">
                               <li className="nav-item">
-                                  <a href="#" className="nav-link active" id="home-tab" data-toggle="tab"  role="tab" aria-controls="home" aria-selected="true">About</a>
+                                  <Link to="#"  className="nav-link active" id="home-tab" data-toggle="tab"  role="tab" aria-controls="home" aria-selected="true">About</Link>
                               </li>
                               <li className="nav-item">
-                                  <a href="#" className="nav-link" id="profile-tab" data-toggle="tab"  role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                  <Link to="#" className="nav-link" id="profile-tab" data-toggle="tab"  role="tab" aria-controls="profile" aria-selected="false">Timeline
+                                  </Link>
                               </li>
                           </ul>
                       </div>
@@ -77,17 +78,17 @@ export default class Profile extends Component{
               <div className="row">
                   <div className="col-md-4">
                       <div className="profile-work">
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></a>
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></a>
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></a>
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faLinkedin}/></a>
-                        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGithub}/></a>
+                        <Link to="#" className="mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></Link>
+                        <Link to="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></Link>
+                        <Link to="#" className="mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></Link>
+                        <Link to="#" className="mx-2" role="button"><FontAwesomeIcon icon={faLinkedin}/></Link>
+                        <Link to="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGithub}/></Link>
                           <p>SKILLS</p>
-                          <a href="#" >Web Designer</a><br/>
-                          <a href="#" >Web Developer</a><br/>
-                          <a href="#" >WordPress</a><br/>
-                          <a href="#" >WooCommerce</a><br/>
-                          <a href="#" >PHP, .Net</a><br/>
+                          <Link to="#" >Web Designer</Link><br/>
+                          <Link to="#" >Web Developer</Link><br/>
+                          <Link to="#" >WordPress</Link><br/>
+                          <Link to="#" >WooCommerce</Link><br/>
+                          <Link to="#" >PHP, .Net</Link><br/>
                       </div>
                   </div>
                   <div className="col-md-8">

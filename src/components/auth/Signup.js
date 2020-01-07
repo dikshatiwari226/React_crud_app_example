@@ -82,12 +82,11 @@ export default class Signup extends Component{
     			
     			<p>or sign up with:</p>
 
-		    <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></a>
-		    <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></a>
- 				<a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></a>
-        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faLinkedin}/></a>
-        <a href="#" className="mx-2" role="button"><FontAwesomeIcon icon={faGithub}/></a>
-
+		    <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></Link>
+		    <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></Link>
+ 				<Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></Link>
+        <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faLinkedin}/></Link>
+        <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faGithub}/></Link>
     		<hr/>
     		<div className="mt-4">
           <div className="d-flex justify-content-center links">

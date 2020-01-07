@@ -31,7 +31,7 @@ class App extends Component{
       <Router>
         <div>
           <nav className="mb-4 navbar navbar-expand-lg navbar-dark bg-unique fixed-top">
-            <a className="navbar-brand" href="">React CRUD Example</a>
+            <a className="navbar-brand" href="#">React CRUD Example</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-3" aria-controls="navbarSupportedContent-3" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -51,12 +51,12 @@ class App extends Component{
                     <Link to={'/userIndex'} className="nav-link">Users</Link>
                   </li>
                   <li className="nav-item dropdown active">
-                    <a href="" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorials 
+                    <a href="#" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorials 
                     </a>
                       <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink-3">
-                          <a className="dropdown-item" href="">Make-up</a>
-                          <a className="dropdown-item" href="">Nails</a>
-                          <a className="dropdown-item" href="">DIY</a>
+                          <a className="dropdown-item" href="#">Make-up</a>
+                          <a className="dropdown-item" href="#">Nails</a>
+                          <a className="dropdown-item" href="#">DIY</a>
                       </div>
                     </li>
                 </ul>
@@ -67,7 +67,7 @@ class App extends Component{
                         <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
                     </form>
                     <li className="nav-item dropdown">
-                        <a href="" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fa fa-user"></i> 
+                        <a href="#" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fa fa-user"></i> 
                         </a>
                         <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink">
                             
