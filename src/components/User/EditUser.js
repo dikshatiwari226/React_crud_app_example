@@ -44,7 +44,8 @@ export default class EditUser extends Component {
 
     axios.get(`http://localhost:3000/api/v1/showUser/${id}`)
     .then(res=>{
-      this.setState({id: res.data.id, name: res.data.name, email: res.data.email, gender: res.data.gender, dob: res.data.dob, address: res.data.address, profession: res.data.profession});
+      this.setState({id: res.data.id, name: res.data.name, email: res.data.email, gender: res.data.gender,
+      contact: res.data.contact, dob: res.data.dob, address: res.data.address, profession: res.data.profession});
     })
     .catch(function(error){
       console.log(error);
@@ -66,22 +67,17 @@ export default class EditUser extends Component {
 		console.log(dateAbc);
 
 		const fdata = new FormData();
-		fdata.append('file', this.state.selectedFile, this.state.selectedFile.name); 
-
-		var obj = {
-			name: this.state.name,
-			email: this.state.email,
-			gender: this.state.gender,
-			contact: this.state.contact,
-			dob: dateAbc,
-			address: this.state.address,
-			profession: this.state.profession,
-		 	image: fdata
-		} 
-			
+		fdata.append('file', this.state.selectedFile, this.state.selectedFile.name);
+		fdata.append('name', this.state.name); 
+		fdata.append('email', this.state.email);
+		fdata.append('gender', this.state.gender); 
+		fdata.append('contact', this.state.contact); 
+		fdata.append('dob',  dateAbc); 
+		fdata.append('address', this.state.address);
+		fdata.append('profession', this.state.profession); 
 
 		var id = this.props.match.params["id"]
-    axios.post(`http://localhost:3000/api/v1/editUser/${id}`, obj,  {headers: header})
+    axios.post(`http://localhost:3000/api/v1/editUser/${id}`, fdata,  {headers: header})
     .then(res=>
     	window.location = `/showUser/${res.data.data.user.id}`,
     	alert("User updated successfully")
@@ -161,7 +157,9 @@ export default class EditUser extends Component {
 					       />
 		      			</div>
 
-		      			<input type="file" onChange={this.fileSelectedHandler} />
+		      			<div className="input-group mb-2 form-control borderedioooi">
+		      				<input type="file" onChange={this.fileSelectedHandler} />
+		      			</div>
 		    			<button className="btn btn-info my-4" type="submit">Update User</button>
 					</form>
 				</div>

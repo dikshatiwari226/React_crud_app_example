@@ -57,10 +57,8 @@ class App extends Component{
                     </li>
                 </ul>
                 <ul className="navbar-nav ml-auto nav-flex-icons">
-                    
-
                     <form className="form-inline">
-                        <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
+                        <input className="form-control mr-sm-2 SearchBar" type="text" placeholder="Search" aria-label="Search" style={{backgroundColor: "initial", color: "white"}}/>
                     </form>
                     <li className="nav-item dropdown">
                         <Link to="#" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fa fa-user"></i> 
@@ -87,7 +85,7 @@ class App extends Component{
                           localStorage.token &&
                         
                           <li className="nav-item  d-flex justify-content-end">
-                            <button onClick={this.Logout} className="nav-link"><FaSignOutAlt/>
+                            <button onClick={this.Logout} className="nav-link" style={{backgroundColor: "initial", border: "none"}}><FaSignOutAlt/>
                             Logout</button> 
                           </li>
                         }

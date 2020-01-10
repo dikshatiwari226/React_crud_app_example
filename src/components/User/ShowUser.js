@@ -13,7 +13,8 @@ export default class ShowUser extends Component {
         contact: '',
         dob: '',
         address: '',
-        profession: ''
+        profession: '',
+        image: ''
       }
   }
 
@@ -22,7 +23,7 @@ export default class ShowUser extends Component {
 
     axios.get(`http://localhost:3000/api/v1/showUser/${id}`)
     .then(res=>{
-      this.setState({id: res.data.id, name: res.data.name, email: res.data.email, gender: res.data.gender, contact: res.data.contact, dob: res.data.dob, address: res.data.address, profession: res.data.profession, image: res.data.iamge});
+      this.setState({id: res.data.id, name: res.data.name, email: res.data.email, gender: res.data.gender, contact: res.data.contact, dob: res.data.dob, address: res.data.address, profession: res.data.profession, image: res.data.image.url});
     })
     .catch(function(error){
       console.log(error);
@@ -55,7 +56,7 @@ export default class ShowUser extends Component {
                   <td><Moment format="DD MMM YYYY">{this.state.dob}</Moment></td>
                   <td>{this.state.address}</td>
                   <td>{this.state.profession}</td>
-                  <td>{this.state.image}</td>
+                  <td><img style={{width: 100, height: 100}} className='tc br3' alt='none' src={'http://localhost:3000'+ this.state.image } /></td>
                 </tr>
           </tbody>
         </table>
