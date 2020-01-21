@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {NotificationManager} from 'react-notifications';
+
 
 export default class Edit extends Component {
 
@@ -9,6 +11,7 @@ export default class Edit extends Component {
 			this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
 			this.onChangeGstNumber = this.onChangeGstNumber.bind(this);
 			this.onSubmit = this.onSubmit.bind(this);
+			this.goBack = this.goBack.bind(this);
 
 			this.state ={
 				person_name: '',
@@ -16,6 +19,10 @@ export default class Edit extends Component {
 				business_gst_number: ''
 			}
 	}
+
+	goBack(){
+    this.props.history.goBack();
+  }
 
 	onChangePersonName(e){
 		this.setState({
@@ -36,6 +43,7 @@ export default class Edit extends Component {
 	}
 
 	onSubmit(e){
+		var api_url = process.env;
 		const header = {
       'Content-Type': 'application/json'
     }
@@ -48,20 +56,26 @@ export default class Edit extends Component {
 		}
 
 		var id = this.props.match.params["id"]
-    axios.post(`http://localhost:3000/edit/${id}`, obj, {headers: header})
-    .then(res=> 
-    	window.location = `/show/${res.data.id}`,
-    	alert("Business updated successfully")
-    );
-      
+    axios.post(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/edit/${id}`, obj, {headers: header})
+    .then(res=> {
+    		if(res.data.errors)
+    	{
+    		NotificationManager.error(res.data.errors[0]);
+    	}
+    	else{
+    		var id = res.data.data.business.id
+    		NotificationManager.success("Business updated successfully", 2000);
+    		this.props.history.push(`/show/${id}`);
+    	}});
     }
 
 
 
 	componentDidMount(){
+		var api_url = process.env;
 		var id = this.props.match.params["id"]
 
-    axios.get(`http://localhost:3000/businesses/${id}`)
+    axios.get(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/businesses/${id}`)
     .then(res=>{
       this.setState({id: res.data.id, person_name: res.data.person_name, business_name: res.data.business_name, business_gst_number: res.data.business_gst_number});
     })
@@ -73,7 +87,8 @@ export default class Edit extends Component {
     render() {
       return (
         <div style={{ marginTop: "3%",  padding: "5%"}}>
-				<h3 className="text-center">Add New Business</h3><br/>
+       	<button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+				<h3 className="text-center">Update Business</h3><br/>
 				<form onSubmit={this.onSubmit}>
 					<div className="form-group">
 						<label>Person Name:</label>
@@ -99,8 +114,8 @@ export default class Edit extends Component {
 							onChange={this.onChangeGstNumber}
 						/>
 					</div>
-					<div className="form-group">
-						<input type="submit" value="Register Business" className="btn btn-primary"/>
+					<div className="form-group d-flex justify-content-center">
+						<input type="submit" value="Update Business" className="btn btn-primary"/>
 					</div>
 				</form>
 			</div>

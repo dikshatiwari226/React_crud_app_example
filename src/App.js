@@ -14,6 +14,13 @@ import ShowUser from './components/User/ShowUser';
 import EditUser from './components/User/EditUser';
 import './index.css';
 import { FaSignOutAlt,FaSignInAlt } from 'react-icons/fa';
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
+import ForgotPassword from './components/Password/ForgotPassword';
+import Admin from './components/auth/Admin';
+import ChangePassword from './components/Password/ChangePassword';
+import { PrivateRoute } from './components/PrivateRoute';
+
 
 class App extends Component{
 
@@ -38,9 +45,6 @@ class App extends Component{
                     <Link to={'/'} className="nav-link">Home <span className="sr-only">(current)</span></Link>
                   </li>
                   <li className="nav-item">
-                    <Link to={'/create'} className="nav-link">Create</Link>
-                  </li>
-                  <li className="nav-item">
                     <Link to={'/index'} className="nav-link">Index</Link>
                   </li>
                   <li className="nav-item">
@@ -50,7 +54,7 @@ class App extends Component{
                     <Link to="" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorials 
                     </Link>
                       <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink-3">
-                          <Link to="#" className="dropdown-item">Make-up</Link>
+                          <Link to="/admin" className="dropdown-item">Admin</Link>
                           <Link to="#" className="dropdown-item">Nails</Link>
                           <Link to="#" className="dropdown-item">DIY</Link>
                       </div>
@@ -65,15 +69,21 @@ class App extends Component{
                         </Link>
                         <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink">
                             
-                            <a className="dropdown-item" href="/profile"><i className="fa fa-user"> Profile</i></a>
-                            <Link to="#" className="dropdown-item" style={{fontWeight: "bold"}}><FaSignOutAlt/> Log out</Link>
-                            <Link to="#" className="dropdown-item"><i className="fa fa-cog"> Change Password</i></Link>
+                            <a className="dropdown-item" href="/profile" style={{fontWeight: "bold", paddingLeft: 0 }}><i className="fa fa-user"> Profile</i></a>
+                            { localStorage.token &&
+                              
+                              <button onClick={this.Logout} className=" dropdown-item" style={{fontWeight: "bold", paddingLeft: 0 }}><FaSignOutAlt/>
+                              Logout</button> 
+                            }
+                            <Link to="/changePassword" className="dropdown-item" style={{fontWeight: "bold", paddingLeft: 0 }}><i className="fa fa-cog"> Change Password</i></Link>
                         </div>
                     </li>
-
-                    <li className="nav-item  d-flex justify-content-end">
-                      <Link to={'/signup'} className="nav-link">Sign Up</Link>
-                    </li>
+                        {
+                            !localStorage.token &&
+                          <li className="nav-item  d-flex justify-content-end">
+                            <Link to={'/signup'} className="nav-link">Sign Up</Link>
+                          </li>
+                        }
                         {
                           !localStorage.token &&
                         
@@ -82,33 +92,36 @@ class App extends Component{
                           </li>
                         }
                         {
-                          localStorage.token &&
-                        
-                          <li className="nav-item  d-flex justify-content-end">
-                            <button onClick={this.Logout} className="nav-link" style={{backgroundColor: "initial", border: "none"}}><FaSignOutAlt/>
-                            Logout</button> 
+                          localStorage.user_email && 
+                          <li className="nav-item">
+                            <div className="nav-link" style={{backgroundColor: "initial", border: "none"}}>{localStorage.user_email}</div>
                           </li>
                         }
+                        
                 </ul>
             </div>
           </nav>
           
           <br/>
            <Switch>
-              <Route exact path='/create' component={Create}/>
-              <Route path='/edit/:id' component={Edit}/>
-              <Route path='/index' component={Index}/>
-              <Route path='/show/:id' component={Show}/>
               <Route path='/signup' component={Signup}/>
               <Route path='/login' component={Login}/>
-              <Route path='/profile' component={Profile}/>
-              <Route path='/edit_profile/:id' component={EditProfile}/>
-              <Route path="/userIndex" component={UserIndex}/>
-              <Route path='/editUser/:id' component={EditUser}/>
-              <Route path='/showUser/:id' component={ShowUser}/>
-              <Route path='/' component={Index}/>
-              
+
+              <PrivateRoute exact path='/create' component={Create}/>
+              <PrivateRoute path='/edit/:id' component={Edit}/>
+              <PrivateRoute path='/index' component={Index}/>
+              <PrivateRoute path='/show/:id' component={Show}/>
+              <PrivateRoute path='/profile' component={Profile}/>
+              <PrivateRoute path='/edit_profile/:id' component={EditProfile}/>
+              <PrivateRoute path="/userIndex" component={UserIndex}/>
+              <PrivateRoute path='/editUser/:id' component={EditUser}/>
+              <PrivateRoute path='/showUser/:id' component={ShowUser}/>
+              <Route path='/forgotPassword' component={ForgotPassword}/>
+              <PrivateRoute path='/changePassword' component={ChangePassword}/>
+              <PrivateRoute path='/admin' component={Admin}/>
+              <PrivateRoute path='/' component={Index}/>
            </Switch>
+            <NotificationContainer />
         </div>
       </Router>
     );

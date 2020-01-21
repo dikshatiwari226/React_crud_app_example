@@ -2,20 +2,27 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import { MDBDataTable } from 'mdbreact';
+import {NotificationManager} from 'react-notifications';
 
 
 export default class UserIndex extends Component {
 
 	constructor(props){
 		super(props);
+    this.goBack = this.goBack.bind(this);
       this.state = {users: []};
 	}
 
+  goBack(){
+    this.props.history.goBack();
+  }
+
   componentDidMount(){
+    var api_url = process.env;
     const headers = {
       'Content-Type': 'application/json'
     }
-    axios.post(`http://localhost:3000/api/v1/users`, {header: headers})
+    axios.post(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/api/v1/users`, {header: headers})
     .then(res=>{
       this.setState({users: res.data.data.user});
     })
@@ -27,19 +34,25 @@ export default class UserIndex extends Component {
   
 
   userDelete = (id) => {
+    var api_url = process.env;
       const headers = {
       'Content-Type': 'application/json'
       }
-      console.log("******************************************", id)
-      axios.get(`http://localhost:3000/api/v1/delete/${id}`, {headers: headers})
-      .then(response => {
-        window.location = "/UserIndex"
-      })
+      axios.get(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/api/v1/delete/${id}`, {headers: headers})
+      .then(res => {
+        if(res.data.errors)
+        {
+          NotificationManager.error(res.data.errors[0]);
+        }
+        else{
+          NotificationManager.success("User deleted successfully", 'Successfull!', 2000);
+          this.props.history.push(`/UserIndex`);
+        } 
+      });
   }
 
   
   render() {
-
     const {users} = this.state
     console.log("--Users", users)
     const allrecords = []; 
@@ -47,7 +60,7 @@ export default class UserIndex extends Component {
       users.map((user, index) => 
         <div key={index}>
           {
-              allrecords.push({sn: index + 1, id: user.id, name: user.name, email: user.email, show: <Link to={"/showUser/"+user.id} className="btn btn-primary">Show</Link>, edit: <Link to={"/editUser/"+user.id} className="btn btn-warning">Edit</Link>, delete: <button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.userDelete(user.id)};}}>Delete</button> })
+              allrecords.push({sn: index + 1, id: user.id, name: user.name, email: user.email, show: <Link to={"/showUser/"+user.id} className="btn btn-primary">Show</Link>,  edit: <Link to={"/editUser/"+user.id} className="btn btn-warning">Edit</Link> , delete: <button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.userDelete(user.id)};}}>Delete</button> })
               });
           }
         </div>
@@ -106,6 +119,7 @@ export default class UserIndex extends Component {
     
     return (
       <div style={{marginTop: "3%",padding: "5%"}}>
+        <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
         <h3 align="center">All Users</h3><br/>
         <MDBDataTable
           striped

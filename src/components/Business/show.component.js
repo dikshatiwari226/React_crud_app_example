@@ -5,6 +5,7 @@ import axios from 'axios';
 export default class Show extends Component {
   constructor(props){
     super(props);
+    this.goBack = this.goBack.bind(this);
       this.state ={
         person_name: '',
         business_name: '',
@@ -12,10 +13,15 @@ export default class Show extends Component {
       }
   }
 
+  goBack(){
+    this.props.history.goBack();
+  }
+
   componentDidMount(){
     var id= this.props.match.params["id"]
+    var api_url = process.env;
 
-    axios.get(`http://localhost:3000/businesses/${id}`)
+    axios.get(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/businesses/${id}`)
     .then(res=>{
       this.setState({id: res.data.id, person_name: res.data.person_name, business_name: res.data.business_name, business_gst_number: res.data.business_gst_number});
     })
@@ -27,6 +33,7 @@ export default class Show extends Component {
   render() {
       return (
         <div style={{marginTop: "3%", padding: "5%"}}>
+          <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
           <h3 align="center">Show Details</h3><br/>
           <table className="table table-striped" style={{ marginTop: 20}}>
           <thead>

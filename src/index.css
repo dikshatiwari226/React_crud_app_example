@@ -14,7 +14,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/*=======  ErrorMessgae =====*/
+.errorMsg {
+  color: #cc0000;
+  margin-bottom: 12px;
+}
 
+.sucessMsg {
+  color: #6B8E23;
+  margin-bottom: 10px;
+}
 /*========= Datatable ============*/
 .dataTables_paginate{
     float:right;

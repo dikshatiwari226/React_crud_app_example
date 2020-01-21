@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; 
-import Pagination from "react-js-pagination";
+import {NotificationManager} from 'react-notifications';
 require("bootstrap/scss/bootstrap.scss");
+
 
 export default class Index extends Component {
 
 	constructor(props){
 		super(props);
-      this.state = {business: [], activePage: 2};
+    this.goBack = this.goBack.bind(this);
+    this.state = {
+      business: [], activePage: 2
+    };
 	}
 
+  goBack(){
+    this.props.history.goBack();
+  }
+
   componentDidMount(){
-    axios.get(`http://localhost:3000/businesses`)
+    var api_url = process.env;
+    axios.get(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/businesses`)
     .then(res=>{
       this.setState({business: res.data});
     })
@@ -24,14 +33,21 @@ export default class Index extends Component {
   
 
   businessDelete = (id) => {
+      var api_url = process.env;  
       const headers = {
       'Content-Type': 'application/json'
       }
-      console.log("******************************************", id)
-      axios.get(`http://localhost:3000/delete/${id}`, {headers: headers})
-      .then(response => {
-        window.location = "/index"
-      })
+      axios.get(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/delete/${id}`, {headers: headers})
+      .then(res => {
+        if(res.data.errors)
+        {
+          NotificationManager.error(res.data.errors[0]);
+        }
+        else{
+          NotificationManager.success("Business deleted successfully", 'Successfull!', 2000);
+          this.props.history.push(`/index`);
+        }
+      });
   }
 
    handlePageChange(pageNumber) {
@@ -41,14 +57,19 @@ export default class Index extends Component {
 
   
   render() {
+    var isAdmin = localStorage.user_role
     const {business} = this.state
-    console.log("--business", business)
     return (
       <div style={{marginTop: "3%",padding: "5%"}}>
+        <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+        { isAdmin === "true" &&
+          <Link to={"/create"} className="btn btn-info float-right">Add New</Link>
+        }
         <h3 align="center">Business List</h3><br/>
         <table className="table table-striped" style={{ marginTop: 20}} >
           <thead>
             <tr>
+              <th>#Id</th>
               <th>Person</th>
               <th>Business</th>
               <th>GST Number</th>
@@ -58,25 +79,21 @@ export default class Index extends Component {
           <tbody>
             {business.map(busi => (
                 <tr key={busi.id}>
+                  <td>{busi.id}</td>
                   <td>{busi.person_name}</td>
                   <td>{busi.business_name}</td>
                   <td>{busi.business_gst_number}</td>
                   <td><Link to={"/show/"+busi.id} className="btn btn-primary">Show</Link></td>
-                  <td><Link to={"/edit/"+busi.id} className="btn btn-warning">Edit</Link></td>
-                  <td><button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.businessDelete(busi.id)};}}>Delete</button></td>
-
+                  { isAdmin === "true" && 
+                    <td><Link to={"/edit/"+busi.id} className="btn btn-warning">Edit</Link></td> 
+                  }
+                  { isAdmin === "true" &&
+                    <td><button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.businessDelete(busi.id)};}}>Delete</button></td>
+                  }
                 </tr>
               ))} 
           </tbody>
         </table>
-
-        <Pagination
-          activePage={this.state.activePage}
-          itemsCountPerPage={10}
-          totalItemsCount={450}
-          pageRangeDisplayed={5}
-          onChange={this.handlePageChange}
-        />
       </div>
     )
   }

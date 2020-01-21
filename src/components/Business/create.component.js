@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-
+import {NotificationManager} from 'react-notifications';
 
 export default class Create extends Component{
 
@@ -10,6 +10,7 @@ export default class Create extends Component{
 			this.onChangeBusinessName = this.onChangeBusinessName.bind(this);
 			this.onChangeGstNumber = this.onChangeGstNumber.bind(this);
 			this.onSubmit = this.onSubmit.bind(this);
+			this.goBack = this.goBack.bind(this);
 
 			this.state ={
 				person_name: '',
@@ -17,6 +18,10 @@ export default class Create extends Component{
 				business_gst_number: ''
 			}
 	}
+
+	goBack(){
+    this.props.history.goBack();
+  }
 
 	onChangePersonName(e){
 		this.setState({
@@ -37,6 +42,7 @@ export default class Create extends Component{
 	}
 
 	onSubmit(e){
+		var api_url = process.env;
 		const header = {
       'Content-Type': 'application/json'
     }
@@ -48,11 +54,18 @@ export default class Create extends Component{
 			business_gst_number: this.state.business_gst_number
 		}
     
-    axios.post(`http://localhost:3000/businesses`, obj, {headers: header})
-    .then(res=> 
-    	window.location = `/show/${res.data.id}`,
-    	alert("Business created successfully")
-    );
+    axios.post(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/businesses`, obj, {headers: header})
+    .then(res=> {
+    	if(res.data.errors)
+    	{
+    		NotificationManager.error(res.data.errors[0]);
+    	}
+    	else{
+    		var id = res.data.data.business.id
+    		NotificationManager.success("Business created successfully", 'Successfull!', 2000);
+    		this.props.history.push(`/show/${id}`);
+    	}
+    });
       
   }
 
@@ -60,6 +73,7 @@ export default class Create extends Component{
 	render(){
 		return(
 			<div style={{marginTop: "3%", padding: "5%"}}>
+				<button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
 				<h3 align="center">Add New Business</h3><br/>
 				<form onSubmit={this.onSubmit} >
 					<div className="form-group">
@@ -86,7 +100,7 @@ export default class Create extends Component{
 							onChange={this.onChangeGstNumber}
 						/>
 					</div>
-					<div className="form-group">
+					<div className="form-group d-flex justify-content-center">
 						<input type="submit" value="Register Business" className="btn btn-primary"/>
 					</div>
 				</form>

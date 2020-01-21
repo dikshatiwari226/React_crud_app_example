@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "7.0.0-beta.55",
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-brands-svg-icons": "^5.12.0",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
+    "@material-ui/core": "1.4.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -14,12 +16,15 @@
     "axios": "^0.19.0",
     "bootstrap": "^4.4.1",
     "cors": "^2.8.5",
+    "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
     "formidable": "^1.2.1",
+    "formik": "^2.1.1",
+    "jquery": "^3.4.1",
     "mdbreact": "^4.24.0",
     "moment": "^2.24.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-datetime": "^2.16.3",
     "react-day-picker": "^7.4.0",
@@ -27,11 +32,15 @@
     "react-fontawesome": "^1.7.1",
     "react-icons": "^3.8.0",
     "react-js-pagination": "^3.0.2",
+    "react-material-ui-form-validator": "^2.0.9",
     "react-moment": "^0.9.7",
+    "react-notifications": "^1.4.3",
+    "react-popper": "0.10.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "reactjs-file-uploader": "^1.0.8",
-    "reactstrap": "^8.2.0"
+    "reactstrap": "^8.2.0",
+    "yup": "^0.28.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -56,7 +65,9 @@
   },
   "description": "I used node version for this project. node -v v10.16.3",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.0.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dikshatiwari226/React_crud_app_example.git"

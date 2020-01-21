@@ -11,3 +11,4 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
 	
 serviceWorker.unregister();
+
