@@ -11,6 +11,7 @@ export default class Login extends Component{
 		this.state={
 			email: '',
 			password: '',
+			submitted: false
 		}
 		this.onChangeHandler = this.onChangeHandler.bind(this);
 		this.onSubmitHandler = this.onSubmitHandler.bind(this);
@@ -22,8 +23,10 @@ export default class Login extends Component{
 	}
 
 	onSubmitHandler(e){
-		var api_url = process.env;
 		e.preventDefault();
+		this.setState({ submitted: true});		
+		
+		var api_url = process.env;
 		const header = {
       'Content-Type': 'application/json'
     }	
@@ -35,7 +38,7 @@ export default class Login extends Component{
     .then(res=>{
       if(res.data.errors)
 	    	{
-	    		NotificationManager.error(res.data.errors[0]);
+	    		NotificationManager.error(res.data.errors);
 	    	}
       else{
         var token = res.data.data.user.authentication_token
@@ -48,10 +51,11 @@ export default class Login extends Component{
     }); 
 	}
 
-
+	
 	 
 
 	render(){
+		const {submitted, email, password} = this.state;
 		return(
 			<div>
 				<div className="col-md-5 col-md-offset-4" id="login"><br/><br/><br/>
@@ -60,23 +64,33 @@ export default class Login extends Component{
 							<form onSubmit={this.onSubmitHandler}>
 								<p className="h4 mb-4 text-center">Login <FaSignInAlt/> </p>
 
-								<div className="input-group mb-2">
-			        		<input type="email" className="form-control" placeholder="Email" required
+								<div className={'input-group mb-2' + (submitted && !email ? '  has-error' : ' ')}>
+			        		<input type="text" className="form-control" placeholder="Email" 
 			        		name="email" 
 	       		 			value={this.state.email}
 			        		onChange={this.onChangeHandler}
 			        		noValidate/>
+			        		 {
+			        		 	submitted && !email &&
+			        		 		<div className="help-block">Email is required!</div>
+			        		 }
       					</div>
 
-      					<div className="input-group mb-2">
-			        		<input type="password" className="form-control" placeholder="Password" required
+      					<div className={'input-group mb-2' + (submitted && !password ? '  has-error' : ' ')}>
+			        		<input type="password" className="form-control" placeholder="Password" 
 			        		name="password" 
 	       		 			value={this.state.password}
-			        		onChange={this.onChangeHandler}/>
+			        		onChange={this.onChangeHandler}
+			        		/>
+			        		{
+			        		 	submitted && !password &&
+			        		 		<div className="help-block">Password is required!</div>
+			        		 }
       					</div>
-      					<br/>
 
 							  <button type="submit" className="btn btn-success btn-block">Submit</button>
+							  <br/>
+							  
       					<hr/>
                 <div className="text-center">
                     Don't have an account? <Link to="/signup" className="links" >Sign Up</Link>

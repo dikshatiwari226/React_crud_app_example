@@ -124,6 +124,7 @@ export default class EditProfile extends Component{
 					        onChange={this.onChangeHandler} 
 					       />
 		      			</div>
+		      			
 		      			<div className="input-group mb-2">
 					        <select className="form-control borderedioooi"  
 					        	name="gender"

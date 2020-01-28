@@ -1,7 +1,44 @@
 import React, {Component} from 'react';
+import axios from 'axios';
+import {NotificationManager} from 'react-notifications';
 import './style.css';
 
 export default class ForgotPassword extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      email: '',
+      submitted: false
+    }
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onSubmitHandler = this.onSubmitHandler.bind(this);
+  }
+
+  onChangeHandler(e){
+    const {name, value} =  e.target;
+    this.setState({ [name]: value });
+  }
+
+  onSubmitHandler(e){
+    e.preventDefault();
+    this.setState({ submitted: true});
+    var api_url = process.env;
+    const header = {
+      'Content-Type': 'application/json'
+    } 
+    var user = {email: this.state.email}
+    axios.post(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/api/v1/forgot`, user, {headers: header})
+    .then(res=>{
+      if(res.data.errors)
+        {
+          NotificationManager.error(res.data.errors);
+        }
+      else{
+        NotificationManager.success("Password updated successfully", 'Successfull !', 2000);
+        this.props.history.push(`/index`);
+      }
+    }); 
+  }
 
 	render(){
 		return(
@@ -18,19 +55,21 @@ export default class ForgotPassword extends Component{
                               <p>You can reset your password here.</p>
                               <div className="panel-body">
                 
-                                <form id="register-form" role="form" autocomplete="off" className="form" method="post">
-                
+                               <form onSubmit={this.onSubmitHandler}>              
                                   <div className="form-group">
                                     <div className="input-group">
                                       <span className="input-group-addon"><i className="glyphicon glyphicon-envelope color-blue"></i></span>
-                                      <input id="email" name="email" placeholder="email address" className="form-control"  type="email"/>
+                                      
+                                      <input type="text" className="form-control" placeholder="Email" 
+                                        name="email" 
+                                        value={this.state.email}
+                                        onChange={this.onChangeHandler}
+                                        />
                                     </div>
                                   </div>
                                   <div className="form-group">
-                                    <input name="recover-submit" className="btn btn-lg btn-primary btn-block" value="Reset Password" type="submit"/>
-                                  </div>
-                                  
-                                  <input type="hidden" className="hide" name="token" id="token" value=""/> 
+                                    <button type="submit" className="btn btn-lg btn-primary btn-block">Reset Password</button>
+                                  </div>  
                                 </form>
                 
                               </div>

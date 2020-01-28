@@ -1,81 +1,58 @@
 import React, {Component} from 'react';
-import ReactDOM from "react-dom";
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle,faTwitter,faLinkedin,faGithub } from '@fortawesome/free-brands-svg-icons'
 import axios from 'axios';
 import {NotificationManager} from 'react-notifications';
 
-function validate(name, email, password) {
-  // we are going to store errors for all fields
-  // in a signle array
-  const errors = [];
 
-  if (name.length === 0) {
-    errors.push("Name can't be empty");
-  }
-
-  if (email.length < 5) {
-    errors.push("Email should be at least 5 charcters long");
-  }
-  if (email.split("").filter(x => x === "@").length !== 1) {
-    errors.push("Email should contain a @");
-  }
-  if (email.indexOf(".") === -1) {
-    errors.push("Email should contain at least one dot");
-  }
-
-  if (password.length < 6) {
-    errors.push("Password should be at least 6 characters long");
-  }
-
-  return errors;
-}
 
 export default class Signup extends Component{
 
 	constructor(props){
 		super(props);
-		this.onChangeHandler = this.onChangeHandler.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
 		this.state ={
-			name: '',
-			email: '',
-			password: '',
-			errors: []
+			fields: {},
+      errors: {}
 		}
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 	}
 
-	onChangeHandler(event){
-		const {name, value} =  event.target;
-    this.setState({ [name]: value });
+	onChangeHandler(e){
+		let fields = this.state.fields;
+      fields[e.target.name] = e.target.value;
+      this.setState({
+        fields
+      });
 	}
 
 	onSubmit(event){
     var api_url = process.env;
 		event.preventDefault();
-
-	 	const name = ReactDOM.findDOMNode(this._nameInput).value;
-    const email = ReactDOM.findDOMNode(this._emailInput).value;
-    const password = ReactDOM.findDOMNode(this._passwordInput).value;
-		const errors = validate(name, email, password);
-    if (errors.length > 0) {
-      this.setState({ errors });
-      return;
+		if (this.validateForm()) {
+          let fields = {};
+          fields["name"] = "";
+          fields["email"] = "";
+          fields["password"] = "";
+          fields["password_confirmation"] = "";
+          this.setState({fields:fields});
+          alert("Form submitted");
     }
 		const header = {
       'Content-Type': 'application/json'
-    }	
+    }
     var obj = {
-			name: this.state.name,
-			email: this.state.email,
-			password: this.state.password
+			name: this.state.fields.name,
+			email: this.state.fields.email,
+			password: this.state.fields.password,
+      password_confirmation: this.state.fields.password_confirmation
 		}
 		axios.post(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/api/v1/sign_up`, obj, {headers: header})
     .then(res=>{
-        if(res.data.errors)
+        if(res.data.data.errors)
       {
-        NotificationManager.error(res.data.errors[0]);
+        NotificationManager.error(res.data.data.errors[0]);
       }
       else{
         NotificationManager.success("User Signup successfully", 'Successfull!', 2000);
@@ -84,48 +61,111 @@ export default class Signup extends Component{
     });
 	}
 
+
+  validateForm() {
+      let fields = this.state.fields;
+      let errors = {};
+      let formIsValid = true;
+
+      if (!fields["name"]) {
+        formIsValid = false;
+        errors["name"] = "*Please enter your name.";
+      }
+
+      if (typeof fields["name"] !== "undefined") {
+        if (!fields["name"].match(/^[a-zA-Z ]*$/)) {
+          formIsValid = false;
+          errors["name"] = "*Please enter alphabet characters only.";
+        }
+      }
+
+      if (!fields["email"]) {
+        formIsValid = false;
+        errors["email"] = "*Please enter your email-ID.";
+      }
+
+      if (typeof fields["email"] !== "undefined") {
+        //regular expression for email validation
+        var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        if (!pattern.test(fields["email"])) {
+          formIsValid = false;
+          errors["email"] = "*Please enter valid email-ID.";
+        }
+      }
+
+      if (!fields["password"]) {
+        formIsValid = false;
+        errors["password"] = "*Please enter your password.";
+      }
+
+      if (typeof fields["password"] !== "undefined") {
+        if (!fields["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
+          formIsValid = false;
+          errors["password"] = "*Password Must be at least( 8 characters, 1 special character,1 number, 1 lowercase, 1 uppercase letter).";
+        }
+      }
+
+      if (!fields["password_confirmation"]) {
+        formIsValid = false;
+        errors["password_confirmation"] = "*Please enter your password_confirmation.";
+      }
+
+      if (typeof fields["password_confirmation"] !== "undefined") {
+        if (!fields["password_confirmation"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
+          formIsValid = false;
+          errors["password_confirmation"] = "*Password Must be at least( 8 characters, 1 special character,1 number, 1 lowercase, 1 uppercase letter).";
+        }
+      }
+
+      this.setState({
+        errors: errors
+      });
+      return formIsValid;
+    }
+
+
 	render(){
-		 const { errors } = this.state;	
 		return(
 			<div className="container-fluid"><br/><br/><br/>
 			<div className="row d-flex justify-content-center">
 			<form className="text-center border border-light p-3 shadow p-3 mb-5 bg-white rounded" action="#!" style={{marginTop: 25, width: "35%"}} onSubmit={this.onSubmit}>
     			<p className="h4 mb-4">Sign up</p>
-		    			{errors.map(error => (
-		          	<p key={error} style={{color: "red"}}>Error: {error}</p>
-		        	))}
 
       			<div className="input-group mb-2">
 			        <input type="text"  className="form-control" placeholder="Username" 
-			        ref={nameInput => (this._nameInput = nameInput)}
 		        	name="name" 
-	       		 	value={this.state.name}
+	       		 	value={this.state.fields.name}
 			        onChange={this.onChangeHandler} 
 			        />
       			</div>
+            <div className="errorMsg">{this.state.errors.name}</div>
 
       			<div className="input-group mb-2">
 			        <input type="email"  className="form-control" placeholder="E-mail"
-              ref={emailInput => (this._emailInput = emailInput)}
 			        name="email"
-			        value={this.state.email}
+			        value={this.state.fields.email}
 			        onChange={this.onChangeHandler} 
 			        />
       			</div>
+            <div className="errorMsg">{this.state.errors.email}</div>
 
       			<div className="input-group mb-2">
 			        <input type="password"  className="form-control" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
-              ref={passwordInput => (this._passwordInput = passwordInput)}
 		         	name="password"
-		         	value={this.state.password}
+		         	value={this.state.fields.password}
 			        onChange={this.onChangeHandler} 
 			       />
       			</div>
+            <div className="errorMsg">{this.state.errors.password}</div>
 
-  				<div className="custom-control custom-checkbox">
-      			<input type="checkbox" className="custom-control-input" id="defaultRegisterFormNewsletter"/>
-        		<label className="custom-control-label" for="defaultRegisterFormNewsletter">Remember me</label>
-    			</div>
+            <div className="input-group mb-2">
+              <input type="password"  className="form-control" placeholder="Confirm Password" aria-describedby="defaultRegisterFormPasswordHelpBlock"
+              name="password_confirmation"
+              value={this.state.fields.password_confirmation}
+              onChange={this.onChangeHandler} 
+             />
+            </div>
+            <div className="errorMsg">{this.state.errors.password_confirmation}</div>
 
     			<button className="btn btn-info my-4 btn-block" type="submit">Sign in</button>
     			

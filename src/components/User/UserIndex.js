@@ -53,6 +53,7 @@ export default class UserIndex extends Component {
 
   
   render() {
+    
     const {users} = this.state
     console.log("--Users", users)
     const allrecords = []; 

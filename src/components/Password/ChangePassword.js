@@ -10,30 +10,40 @@ export default class ChangePassword extends Component{
     super(props);
 
     this.state ={
-      currentPassword: '',
+      oldPassword: '',
       newPassword: '',
+      isChanging: false,  
       confirmPassword: ''
     };
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeClick = this.handleChangeClick.bind(this);
   }
 
-  onChangeHandler(event){
-    debugger
+  validateForm(){
+    return (
+      this.state.oldPassword.length > 0 &&
+      this.state.newPassword.length > 0 &&
+      this.state.newPassword === this.state.confirmPassword
+    );
+  }
+
+  handleChange(event){
     const {name, value} =  event.target;
     this.setState({ [name]: value });
   }
 
-  onSubmit(event){
+  handleChangeClick(event){
+
     var api_url = process.env;
     event.preventDefault();
-
+    this.setState({ isChanging: true });
+    
     const header = {
       'Content-Type': 'application/json',
-      'Token': localStorage.token
+      'User-Token': localStorage.token
     }
     var obj = {
-      currentPassword: this.state.currentPassword,
+      oldPassword: this.state.oldPassword,
       newPassword: this.state.newPassword,
       confirmPassword: this.state.confirmPassword
     }
@@ -41,10 +51,10 @@ export default class ChangePassword extends Component{
     .then(res=>{
         if(res.data.errors)
       {
-        NotificationManager.error(res.data.errors[0]);
+        NotificationManager.error(res.data.errors);
       }
       else{
-        NotificationManager.success("User Signup successfully", 'Successfull!', 2000);
+        NotificationManager.success("Changed Password", 'Successfull!', 2000);
         this.props.history.push(`/userIndex`);
       }
     }); 
@@ -61,13 +71,13 @@ export default class ChangePassword extends Component{
                       <h3 className="mb-0">Change Password</h3>
                   </div>
                   <div className="card-body">
-                      <form className="form" role="form" autoComplete="off">
+                      <form className="form" role="form" autoComplete="off" onSubmit={this.handleChangeClick}>
                           <div className="form-group">
-                              <label htmlFor="inputPasswordOld">Current Password</label>
+                              <label htmlFor="inputPasswordOld">Old Password</label>
                               <input type="password" className="form-control" id="inputPasswordOld" required=""
-                                name="currentPassword" 
-                                value={this.state.currentPassword}
-                                onChange={this.onChangeHandler} 
+                                name="oldPassword" 
+                                value={this.state.oldPassword}
+                                onChange={this.handleChange} 
                               />
                           </div>
                           <div className="form-group">
@@ -75,7 +85,7 @@ export default class ChangePassword extends Component{
                               <input type="password" className="form-control" id="inputPasswordNew" required=""
                                 name="newPassword" 
                                 value={this.state.newPassword}
-                                onChange={this.onChangeHandler} 
+                                onChange={this.handleChange} 
                               />
                               <span className="form-text small text-muted">
                                   The password must be 8-20 characters, and must <em>not</em> contain spaces.
@@ -86,14 +96,19 @@ export default class ChangePassword extends Component{
                               <input type="password" className="form-control" id="inputPasswordconfirmPassword" required=""
                                 name="confirmPassword" 
                                 value={this.state.confirmPassword}
-                                onChange={this.onChangeHandler} 
+                                onChange={this.handleChange} 
                               />
                               <span className="form-text small text-muted">
                                   To confirm, type the new password again.
                               </span>
                           </div>
                           <div className="form-group">
-                            <button type="submit" className="btn btn-success btn-lg float-right">Save</button>
+                            <button type="submit" className="btn btn-success btn-lg float-right" 
+                              loadingText="Changing..."
+                              disabled = {!this.validateForm()} 
+                              isLoading={this.state.isChanging} >
+                              Change Password
+                            </button>
                           </div>
                       </form>
                   </div>
