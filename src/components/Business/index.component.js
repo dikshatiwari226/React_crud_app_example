@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'; 
 import {NotificationManager} from 'react-notifications';
+import Loader from 'react-loader-spinner'
 require("bootstrap/scss/bootstrap.scss");
 
 
@@ -11,7 +12,8 @@ export default class Index extends Component {
 		super(props);
     this.goBack = this.goBack.bind(this);
     this.state = {
-      business: [], activePage: 2
+      business: [],
+      loading: true
     };
 	}
 
@@ -23,7 +25,7 @@ export default class Index extends Component {
     var api_url = process.env;
     axios.get(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/businesses`)
     .then(res=>{
-      this.setState({business: res.data});
+      this.setState({business: res.data, loading: false});
     })
     .catch(function(error){
       console.log(error);
@@ -60,6 +62,17 @@ export default class Index extends Component {
     var isAdmin = localStorage.user_role
     const {business} = this.state
     return (
+      <div>
+
+        {
+          this.state.loading ? <center><Loader
+           type="TailSpin"
+           color="#00BFFF"
+           height={100}
+           width={100}
+          /></center> : null 
+        }
+
       <div style={{marginTop: "3%",padding: "5%"}}>
         <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
         { isAdmin === "true" &&
@@ -84,10 +97,10 @@ export default class Index extends Component {
                   <td>{busi.business_name}</td>
                   <td>{busi.business_gst_number}</td>
                   <td><Link to={"/show/"+busi.id} className="btn btn-primary">Show</Link></td>
-                  { isAdmin === "true" && 
+                  { isAdmin === "admin" && 
                     <td><Link to={"/edit/"+busi.id} className="btn btn-warning">Edit</Link></td> 
                   }
-                  { isAdmin === "true" &&
+                  { isAdmin === "admin" &&
                     <td><button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.businessDelete(busi.id)};}}>Delete</button></td>
                   }
                 </tr>
@@ -95,6 +108,7 @@ export default class Index extends Component {
           </tbody>
         </table>
       </div>
+    </div>
     )
   }
 }

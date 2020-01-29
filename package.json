@@ -39,6 +39,7 @@
     "react-moment": "^0.9.7",
     "react-notifications": "^1.4.3",
     "react-popper": "0.10.4",
+    "react-refresh-indicator": "^1.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "reactjs-file-uploader": "^1.0.8",
