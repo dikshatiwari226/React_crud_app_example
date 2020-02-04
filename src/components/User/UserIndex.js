@@ -57,7 +57,6 @@ export default class UserIndex extends Component {
 
   
   render() {
-    var isAdmin = localStorage.user_role
     const {users} = this.state
     console.log("--Users", users)
     
