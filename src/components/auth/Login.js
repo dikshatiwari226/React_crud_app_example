@@ -45,8 +45,9 @@ export default class Login extends Component{
         localStorage.setItem('token', token);
         localStorage.setItem('user_role', res.data.data.user.role);
         localStorage.setItem('user_email', res.data.data.user.email)
-        NotificationManager.success("Login successfully", 'Successfull !', 2000);
-        this.props.history.push(`/index`);
+        // NotificationManager.success("Login successfully", 'Successfull !', 2000);
+        // this.props.history.push(`/index`);
+        window.location = '/index';
       }
     }); 
 	}

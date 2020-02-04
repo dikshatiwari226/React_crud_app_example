@@ -34,7 +34,7 @@ export default class ForgotPassword extends Component{
           NotificationManager.error(res.data.errors);
         }
       else{
-        NotificationManager.success("Password updated successfully", 'Successfull !', 2000);
+        NotificationManager.success(res.data.message, 'Successfull !', 2000);
         this.props.history.push(`/index`);
       }
     }); 

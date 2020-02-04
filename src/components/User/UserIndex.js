@@ -13,7 +13,7 @@ export default class UserIndex extends Component {
     this.goBack = this.goBack.bind(this);
       this.state = {
         users: [],
-        isLoading: false
+        isLoading: true
       };
 	}
 
@@ -28,7 +28,7 @@ export default class UserIndex extends Component {
     }
     axios.post(`${JSON.parse(api_url.REACT_APP_ENV).APIURL}/api/v1/users`, {header: headers})
     .then(res=>{
-      this.setState({users: res.data.data.user, isLoading: true});
+      this.setState({users: res.data.data.user, isLoading: false});
     })
     .catch(function(error){
       console.log(error);
@@ -57,6 +57,7 @@ export default class UserIndex extends Component {
 
   
   render() {
+    var isAdmin = localStorage.user_role
     const {users} = this.state
     console.log("--Users", users)
     
@@ -66,10 +67,12 @@ export default class UserIndex extends Component {
         <div key={index}>
           { 
               allrecords.push({sn: index + 1, id: user.id, name: user.name, email: user.email, 
+                show: <Link to={"/showUser/"+user.id} className="btn btn-primary">Show</Link>, 
                 
-                  show: <Link to={"/showUser/"+user.id} className="btn btn-primary">Show</Link>,
-                  edit: <Link to={"/editUser/"+user.id} className="btn btn-warning">Edit</Link>, 
-                  delete: <button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.userDelete(user.id)};}}>Delete</button> })
+                edit:  <Link to={"/editUser/"+user.id} className="btn btn-warning">Edit</Link>,
+                
+                delete: <button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.userDelete(user.id)};}}>Delete</button> })
+                  
           }
       );
     }
@@ -129,26 +132,26 @@ export default class UserIndex extends Component {
 
     let loadingData;
     if (this.state.isLoading) {
-        loadingData = <center>
-                        <Loader
-                         type="TailSpin"
-                         color="#00BFFF"
-                         height={100}
-                         width={100}
-                         timeout={10000}
-                        />
-                      </center>
+      loadingData = <center>
+                      <Loader
+                       type="TailSpin"
+                       color="#00BFFF"
+                       height={100}
+                       width={100}
+                       timeout={10000}
+                      />
+                    </center>
         
     }else{
       loadingData = <div style={{marginTop: "3%",padding: "5%"}}>
-          <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
-          <h3 align="center">All Users</h3><br/>
-          <MDBDataTable
-            striped
-            hover
-            data={data}
-          />
-        </div>
+                      <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+                      <h3 align="center">All Users</h3><br/>
+                      <MDBDataTable
+                        striped
+                        hover
+                        data={data}
+                      />
+                    </div>
     }
       return(
         <div>{loadingData}</div>   

@@ -12,7 +12,7 @@ export default class Signup extends Component{
 	constructor(props){
 		super(props);
 		this.state ={
-			fields: {},
+			fields: {}, 
       errors: {}
 		}
     this.onChangeHandler = this.onChangeHandler.bind(this);

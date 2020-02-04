@@ -17,7 +17,6 @@ import { FaSignOutAlt,FaSignInAlt } from 'react-icons/fa';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 import ForgotPassword from './components/Password/ForgotPassword';
-import Admin from './components/auth/Admin';
 import ChangePassword from './components/Password/ChangePassword';
 import { PrivateRoute } from './components/PrivateRoute';
 
@@ -45,16 +44,13 @@ class App extends Component{
                     <Link to={'/'} className="nav-link">Home <span className="sr-only">(current)</span></Link>
                   </li>
                   <li className="nav-item">
-                    <Link to={'/index'} className="nav-link">Index</Link>
-                  </li>
-                  <li className="nav-item">
                     <Link to={'/userIndex'} className="nav-link">Users</Link>
                   </li>
                   <li className="nav-item dropdown active">
                     <Link to="" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorials 
                     </Link>
                       <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink-3">
-                          <Link to="/admin" className="dropdown-item">Admin</Link>
+                          <Link to="#" className="dropdown-item">Admin</Link>
                           <Link to="#" className="dropdown-item">Nails</Link>
                           <Link to="#" className="dropdown-item">DIY</Link>
                       </div>
@@ -109,7 +105,6 @@ class App extends Component{
 
               <PrivateRoute exact path='/create' component={Create}/>
               <PrivateRoute path='/edit/:id' component={Edit}/>
-              <PrivateRoute path='/index' component={Index}/>
               <PrivateRoute path='/show/:id' component={Show}/>
               <PrivateRoute path='/profile' component={Profile}/>
               <PrivateRoute path='/edit_profile/:id' component={EditProfile}/>
@@ -118,7 +113,6 @@ class App extends Component{
               <PrivateRoute path='/showUser/:id' component={ShowUser}/>
               <Route path='/forgotPassword' component={ForgotPassword}/>
               <PrivateRoute path='/changePassword' component={ChangePassword}/>
-              <PrivateRoute path='/admin' component={Admin}/>
               <PrivateRoute path='/' component={Index}/>
            </Switch>
             <NotificationContainer />
