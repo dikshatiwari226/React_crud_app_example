@@ -70,12 +70,12 @@ export default class Login extends Component{
 			        		name="email" 
 	       		 			value={this.state.email}
 			        		onChange={this.onChangeHandler}
-			        		noValidate/>
-			        		 {
-			        		 	submitted && !email &&
-			        		 		<div className="help-block">Email is required!</div>
-			        		 }
+			        		/>
       					</div>
+      					{
+		        		 	submitted && !email &&
+		        		 		<div className="help-block" style={{ color: 'red'}}>Email is required!</div>
+	        		 	}
 
       					<div className={'input-group mb-2' + (submitted && !password ? '  has-error' : ' ')}>
 			        		<input type="password" className="form-control" placeholder="Password" 
@@ -83,12 +83,12 @@ export default class Login extends Component{
 	       		 			value={this.state.password}
 			        		onChange={this.onChangeHandler}
 			        		/>
-			        		{
-			        		 	submitted && !password &&
-			        		 		<div className="help-block">Password is required!</div>
-			        		 }
       					</div>
-
+      					{
+		        		 	submitted && !password &&
+		        		 		<div className="help-block" style={{ color: 'red'}}>Password is required!</div>
+	        		 	}
+	        		 	<br/>
 							  <button type="submit" className="btn btn-success btn-block">Submit</button>
 							  <br/>
 							  
