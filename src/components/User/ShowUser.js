@@ -40,7 +40,7 @@ export default class ShowUser extends Component {
   render() {
       return (
         <div style={{marginTop: "3%", padding: "5%"}}>
-          <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+        <button type="button" className="btn btn-outline-default btn-md float-right" onClick={this.goBack}>Back</button>
           <h3 align="center">Show User</h3><br/>
           <table className="table table-striped" style={{ marginTop: 20}}>
           <thead>

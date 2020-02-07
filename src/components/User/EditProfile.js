@@ -97,7 +97,7 @@ export default class EditProfile extends Component{
 	render(){
 		return(
 			<div className="container-fluid"><br/><br/><br/>
-				<button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+        <button type="button" className="btn btn-outline-default btn-md float-right" onClick={this.goBack}>Back</button>
 				<div className="row d-flex justify-content-center">
 					<form className="text-center border border-light p-3 shadow p-3 mb-5 bg-white rounded" action="#!" style={{marginTop: 25, width: "65%"}} onSubmit={this.onSubmit}>
 		    			<p className="h4 mb-4">Edit Profile</p>

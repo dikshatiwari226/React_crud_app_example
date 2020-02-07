@@ -73,7 +73,7 @@ export default class Create extends Component{
 	render(){
 		return(
 			<div style={{marginTop: "3%", padding: "5%"}}>
-				<button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+			<button type="button" className="btn btn-outline-default btn-md float-right" onClick={this.goBack}>Back</button>
 				<h3 align="center">Add New Business</h3><br/>
 				<form onSubmit={this.onSubmit} >
 					<div className="form-group">

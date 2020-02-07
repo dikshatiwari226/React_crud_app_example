@@ -19,6 +19,7 @@ import { NotificationContainer } from 'react-notifications';
 import ForgotPassword from './components/Password/ForgotPassword';
 import ChangePassword from './components/Password/ChangePassword';
 import { PrivateRoute } from './components/PrivateRoute';
+import Admin from './components/auth/Admin';
 
 
 class App extends Component{
@@ -50,30 +51,33 @@ class App extends Component{
                     <Link to="" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tutorials 
                     </Link>
                       <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink-3">
-                          <Link to="#" className="dropdown-item">Admin</Link>
+                          <Link to="admin" className="dropdown-item">Admin</Link>
                           <Link to="#" className="dropdown-item">Nails</Link>
                           <Link to="#" className="dropdown-item">DIY</Link>
                       </div>
                     </li>
                 </ul>
+
                 <ul className="navbar-nav ml-auto nav-flex-icons">
                     <form className="form-inline">
                         <input className="form-control mr-sm-2 SearchBar" type="text" placeholder="Search" aria-label="Search" style={{backgroundColor: "initial", color: "white"}}/>
                     </form>
+                  { localStorage.token &&
                     <li className="nav-item dropdown">
                         <Link to="#" className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="fa fa-user"></i> 
                         </Link>
                         <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink">
                             
                             <a className="dropdown-item" href="/profile" style={{fontWeight: "bold", paddingLeft: 0 }}><i className="fa fa-user"> Profile</i></a>
-                            { localStorage.token &&
-                              
+                            
+                            { localStorage.token && 
                               <button onClick={this.Logout} className=" dropdown-item" style={{fontWeight: "bold", paddingLeft: 0 }}><FaSignOutAlt/>
                               Logout</button> 
                             }
                             <Link to="/changePassword" className="dropdown-item" style={{fontWeight: "bold", paddingLeft: 0 }}><i className="fa fa-cog"> Change Password</i></Link>
                         </div>
                     </li>
+                  }
                         {
                             !localStorage.token &&
                           <li className="nav-item  d-flex justify-content-end">
@@ -102,7 +106,7 @@ class App extends Component{
            <Switch>
               <Route path='/signup' component={Signup}/>
               <Route path='/login' component={Login}/>
-
+              <Route path='/admin' component={Admin}/>
               <PrivateRoute exact path='/create' component={Create}/>
               <PrivateRoute path='/edit/:id' component={Edit}/>
               <PrivateRoute path='/show/:id' component={Show}/>

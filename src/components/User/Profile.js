@@ -106,8 +106,8 @@ export default class Profile extends Component{
                         </div>
                     </div>
                     <div className="col-md-2">
-                      <Link to={`/edit_profile/${this.state.id}`} className="profile-edit-btn">Edit Profile</Link>
-                       <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+                      <Link to={`/edit_profile/${this.state.id}`} className="profile-edit-btn btn-outline-primary">Edit Profile</Link>
+                        <button type="button" className="btn btn-outline-default btn-md" onClick={this.goBack}>Back</button>
                     </div>
                 </div>
                 <div className="row">

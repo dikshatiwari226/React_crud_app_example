@@ -74,7 +74,7 @@ export default class Index extends Component {
         }
 
       <div style={{marginTop: "3%",padding: "5%"}}>
-        <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+        <button type="button" className="btn btn-outline-default btn-md" onClick={this.goBack}>Back</button>
         { isAdmin === "admin" &&
           <Link to={"/create"} className="btn btn-info float-right">Add New</Link>
         }

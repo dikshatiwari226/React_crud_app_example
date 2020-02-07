@@ -57,8 +57,10 @@ export default class UserIndex extends Component {
 
   
   render() {
+    var isAdmin = localStorage.user_role
     const {users} = this.state
     console.log("--Users", users)
+    console.log("role", isAdmin)
     
     const allrecords = []; 
     {
@@ -66,10 +68,8 @@ export default class UserIndex extends Component {
         <div key={index}>
           { 
               allrecords.push({sn: index + 1, id: user.id, name: user.name, email: user.email, 
-                show: <Link to={"/showUser/"+user.id} className="btn btn-primary">Show</Link>, 
-                
+                show: <Link to={"/showUser/"+user.id} className="btn btn-primary">Show</Link>,
                 edit:  <Link to={"/editUser/"+user.id} className="btn btn-warning">Edit</Link>,
-                
                 delete: <button className="btn btn-danger" onClick={() => {if(window.confirm('Delete the item?')){this.userDelete(user.id)};}}>Delete</button> })
                   
           }
@@ -81,8 +81,8 @@ export default class UserIndex extends Component {
 
       this.state = {allrecords};
 
-      const data = {
-        columns: [
+      if (isAdmin === "admin"){
+        var show_columns = [
           {
             label: 'SNo.',
             field: 'sn',
@@ -125,7 +125,46 @@ export default class UserIndex extends Component {
             sort: 'disabled',
             width: 100
           }
-        ],
+        ]
+      }
+      else{
+        var show_columns = [
+          {
+            label: 'SNo.',
+            field: 'sn',
+            sort: 'disabled',
+            width: 100
+          },
+          {
+            label: 'Id',
+            field: 'id',
+            sort: 'asc',
+            width: 100
+          },
+          {
+            label: 'Name',
+            field: 'name',
+            sort: 'asc',
+            width: 100
+          },
+          {
+            label: 'Email',
+            field: 'email',
+            sort: 'asc',
+            width: 100
+          },
+          {
+            label: 'Show',
+            field: 'show',
+            sort: 'disabled',
+            width: 100
+          }
+        ]
+        
+      }
+
+      const data = {
+        columns: show_columns,
         rows: allrecords
       };
 
@@ -143,7 +182,10 @@ export default class UserIndex extends Component {
         
     }else{
       loadingData = <div style={{marginTop: "3%",padding: "5%"}}>
-                      <button type="button" className="btn btn-secondary" onClick={this.goBack}>Back</button>
+                      <button type="button" className="btn btn-outline-default btn-md" onClick={this.goBack}>Back</button>
+                      { isAdmin === "admin" &&
+                        <Link to={"/signup"} className="btn btn-info float-right">Add New</Link>
+                      }
                       <h3 align="center">All Users</h3><br/>
                       <MDBDataTable
                         striped

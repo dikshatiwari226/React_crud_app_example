@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF, faGoogle,faTwitter,faLinkedin,faGithub } from '@fortawesome/free-brands-svg-icons'
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faFacebookF, faGoogle,faTwitter,faLinkedin,faGithub } from '@fortawesome/free-brands-svg-icons'
 import axios from 'axios';
 import {NotificationManager} from 'react-notifications';
-
+// import FacebookLogin from 'react-facebook-login';
+// import {GoogleLogin,GoogleLogout} from 'react-google-login';
+// import {GoogleAPI,GoogleLogin,GoogleLogout} from 'react-google-oauth'
 
 
 export default class Signup extends Component{
@@ -13,11 +15,18 @@ export default class Signup extends Component{
 		super(props);
 		this.state ={
 			fields: {}, 
-      errors: {}
-		}
+      errors: {},
+      userDetails: {},
+      isUserloggedIn: false
+		};
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.goBack = this.goBack.bind(this);
 	}
+
+  goBack(){
+    this.props.history.goBack();
+  }
 
 	onChangeHandler(e){
 		let fields = this.state.fields;
@@ -127,6 +136,7 @@ export default class Signup extends Component{
 	render(){
 		return(
 			<div className="container-fluid"><br/><br/><br/>
+      <button type="button" className="btn btn-outline-default btn-md float-right" onClick={this.goBack}>Back</button>
 			<div className="row d-flex justify-content-center">
 			<form className="text-center border border-light p-3 shadow p-3 mb-5 bg-white rounded" action="#!" style={{marginTop: 25, width: "35%"}} onSubmit={this.onSubmit}>
     			<p className="h4 mb-4">Sign up</p>
@@ -168,24 +178,25 @@ export default class Signup extends Component{
             <div className="errorMsg">{this.state.errors.password_confirmation}</div>
 
     			<button className="btn btn-info my-4 btn-block" type="submit">Sign in</button>
-    			
-    			<p>or sign up with:</p>
-
-		    <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></Link>
-		    <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></Link>
- 				<Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></Link>
+		  {/*
+        <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faFacebookF}/></Link>
+	      <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faGoogle}/></Link>
+			  <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faTwitter}/></Link>
         <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faLinkedin}/></Link>
         <Link to="#" className="links mx-2" role="button"><FontAwesomeIcon icon={faGithub}/></Link>
+      */}
     		<hr/>
+
+        
     		<div className="mt-4">
           <div className="d-flex justify-content-center links">
             Already have an account? Click <Link href="/login" to="/login" className="link" style={{"paddingLeft": "10px"}}>here</Link>
         	</div>
         </div>
-
 		</form>
 		</div>
   	</div>
+
 		);
 	}
 
