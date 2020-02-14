@@ -20,7 +20,11 @@ import ForgotPassword from './components/Password/ForgotPassword';
 import ChangePassword from './components/Password/ChangePassword';
 import { PrivateRoute } from './components/PrivateRoute';
 import Admin from './components/auth/Admin';
-
+import applied_jobs from './components/Applied_Jobs/applied_jobs';
+import jobs_info from './components/Applied_Jobs/jobs_info';
+import appliedJob_index from './components/Applied_Jobs/appliedJob_index';
+import ShowAppliedJob from './components/Applied_Jobs/ShowAppliedJob';
+import EditAppliedJob from './components/Applied_Jobs/EditAppliedJob';
 
 class App extends Component{
 
@@ -52,8 +56,8 @@ class App extends Component{
                     </Link>
                       <div className="dropdown-menu dropdown-menu-right dropdown-unique" aria-labelledby="navbarDropdownMenuLink-3">
                           <Link to="admin" className="dropdown-item">Admin</Link>
-                          <Link to="#" className="dropdown-item">Nails</Link>
-                          <Link to="#" className="dropdown-item">DIY</Link>
+                          <Link to="appliedJob_index" className="dropdown-item">Applied Jobs</Link>
+                          <Link to="jobs_info" className="dropdown-item">Job Information</Link>
                       </div>
                     </li>
                 </ul>
@@ -107,6 +111,11 @@ class App extends Component{
               <Route path='/signup' component={Signup}/>
               <Route path='/login' component={Login}/>
               <Route path='/admin' component={Admin}/>
+              <Route path='/jobs_info' component={jobs_info}/>
+              <PrivateRoute path='/applied_jobs' component={applied_jobs}/>
+              <PrivateRoute path='/appliedJob_index' component={appliedJob_index}/>
+              <PrivateRoute path='/editAppliedJob/:id' component={EditAppliedJob}/>
+              <PrivateRoute path='/showAppliedJob/:id' component={ShowAppliedJob}/>
               <PrivateRoute exact path='/create' component={Create}/>
               <PrivateRoute path='/edit/:id' component={Edit}/>
               <PrivateRoute path='/show/:id' component={Show}/>

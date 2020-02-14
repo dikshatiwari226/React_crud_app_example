@@ -8,12 +8,6 @@ export default class EditProfile extends Component{
 
 	constructor(props){
 		super(props);
-		this.onChangeHandler = this.onChangeHandler.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-		this.handleDayChange = this.handleDayChange.bind(this);
-		this.goBack = this.goBack.bind(this);
-
-
 		this.state ={
 				name: '',
         email: '',
@@ -21,11 +15,14 @@ export default class EditProfile extends Component{
         gender: '',
         contact: '',
         selectedDay: undefined,
-
         dob: '',
         address: '',
         profession: ''
 		}
+		this.onChangeHandler = this.onChangeHandler.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
+		this.handleDayChange = this.handleDayChange.bind(this);
+		this.goBack = this.goBack.bind(this);
 	}
 
 	goBack(){
@@ -35,7 +32,7 @@ export default class EditProfile extends Component{
 	handleDayChange(selectedDay){
 		this.setState({
 			selectedDay
-		});
+		}); 
 	}
 
 	componentDidMount(){
